@@ -548,7 +548,7 @@ section {
     top: 0;
     bottom: 0;
     width: 3px;
-    background: #d4af37;
+    background: #807137;
     transform: translateX(-50%) scaleY(0);
     transform-origin: top;
     transition: transform 1.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
@@ -568,6 +568,7 @@ section {
     opacity: 0;
     transform: translateX(-20px);
     transition: all 0.6s ease;
+    z-index: 1;
 }
 
 .timeline-item.visible {
@@ -595,15 +596,15 @@ section {
     top: 0;
     width: 40px;
     height: 40px;
-    background: white;
-    border-radius: 50%;
+
     display: flex;
     align-items: center;
     justify-content: center;
     transform: translateX(-50%) scale(0.5);
     opacity: 0;
     transition: all 0.4s ease-out;
-    z-index: 2;
+    z-index: 10 !important; /* Было 2, теперь 10 */
+
 }
 
 .timeline-heart.animate {
@@ -1125,3 +1126,4 @@ footer p {
         font-size: 16px;
     }
 }
+
