@@ -2,38 +2,32 @@
 document.addEventListener('DOMContentLoaded', function() {
     const musicBtn = document.getElementById('musicToggleBtn');
     
-    // Если кнопка не найдена — выходим (чтобы не было ошибки)
     if (!musicBtn) return;
     
-    // Создаем аудиоэлемент (романтическая фоновая музыка)
     const bgMusic = new Audio('music/music.mp3');
-    bgMusic.loop = true; // Зацикливаем
-    bgMusic.volume = 0.3; // Громкость 30% (не навязчиво)
+    bgMusic.loop = true;
+    bgMusic.volume = 0.3;
     
     let isPlaying = false;
     
-    // Обновление UI кнопки
     function updateButtonUI() {
         if (isPlaying) {
             musicBtn.classList.add('playing');
-            musicBtn.innerHTML = '<i class="fas fa-pause"></i><span>Выключить музыку</span>';
+            musicBtn.innerHTML = '<i class="fas fa-pause" aria-hidden="true"></i><span>Выключить музыку</span>';
         } else {
             musicBtn.classList.remove('playing');
-            musicBtn.innerHTML = '<i class="fas fa-music"></i><span>Включить музыку</span>';
+            musicBtn.innerHTML = '<i class="fas fa-music" aria-hidden="true"></i><span>Включить музыку</span>';
         }
     }
     
-    // Обработчик клика по кнопке
     musicBtn.addEventListener('click', function() {
         if (isPlaying) {
             bgMusic.pause();
             isPlaying = false;
         } else {
-            // Пытаемся воспроизвести (браузеры могут блокировать автовоспроизведение)
             bgMusic.play().catch(e => {
                 console.log('Автовоспроизведение заблокировано:', e);
-                // Показываем подсказку
-                musicBtn.innerHTML = '<i class="fas fa-music"></i><span>Нажмите ещё раз</span>';
+                musicBtn.innerHTML = '<i class="fas fa-music" aria-hidden="true"></i><span>Нажмите ещё раз</span>';
                 setTimeout(() => updateButtonUI(), 1000);
             });
             isPlaying = true;
@@ -41,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateButtonUI();
     });
     
-    // Если музыка играла, а пользователь свернул вкладку — ставим на паузу
     document.addEventListener('visibilitychange', function() {
         if (document.hidden && isPlaying) {
             bgMusic.pause();
@@ -59,29 +52,35 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (!envelope) return;
     
-    // Создаем звук при открытии
     const openSound = new Audio('https://www.soundjay.com/misc/sounds/envelope-opening-01.mp3');
     openSound.load();
     
     envelope.addEventListener('click', function() {
-        // Воспроизводим звук
+        openEnvelope();
+    });
+    
+    envelope.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openEnvelope();
+        }
+    });
+    
+    function openEnvelope() {
         openSound.play().catch(e => console.log('Звук не воспроизвелся:', e));
+        envelope.classList.add('open');
         
-        // Добавляем класс open для анимации конверта
-        this.classList.add('open');
-        
-        // Через 0.6 секунд показываем основной сайт
         setTimeout(() => {
             if (coverPage) coverPage.classList.add('hidden');
             if (invitePage) invitePage.classList.add('visible');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }, 600);
-    });
+    }
 });
 
 // ===== ТАЙМЕР ОБРАТНОГО ОТСЧЕТА =====
 function updateTimer() {
-    const weddingDate = new Date(2026, 7, 2, 14, 0); // 2 августа 2026, 14:00
+    const weddingDate = new Date(2026, 7, 2, 14, 0);
     const now = new Date();
     const diff = weddingDate - now;
     
@@ -103,7 +102,6 @@ function updateTimer() {
     }
 }
 
-// Запускаем таймер
 updateTimer();
 setInterval(updateTimer, 1000);
 
@@ -172,3 +170,78 @@ if (weddingForm) {
         form.submit();
     });
 }
+
+// ===== АНИМАЦИЯ ПРОГРАММЫ ДНЯ =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Анимация появления линии и сердечек
+    const timeline = document.querySelector('.timeline');
+    const hearts = document.querySelectorAll('.timeline-heart');
+    
+    if (timeline && hearts.length) {
+        const observerTimeline = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Анимация линии с задержкой
+                    setTimeout(() => {
+                        timeline.classList.add('animate');
+                    }, 200);
+                    
+                    // Анимация сердечек с задержкой
+                    hearts.forEach((heart, index) => {
+                        setTimeout(() => {
+                            heart.classList.add('animate');
+                        }, 300 + (index * 80));
+                    });
+                    
+                    observerTimeline.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        
+        observerTimeline.observe(timeline);
+    }
+    
+    // Анимация появления пунктов программы
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    
+    if (timelineItems.length) {
+        const observerItems = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, 100);
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        timelineItems.forEach(item => {
+            observerItems.observe(item);
+        });
+    }
+    
+    // Добавляем класс completed при скролле (для изменения цвета сердечек)
+    function updateHeartColors() {
+        const items = document.querySelectorAll('.timeline-item');
+        const windowHeight = window.innerHeight;
+        
+        items.forEach(item => {
+            const rect = item.getBoundingClientRect();
+            const itemCenter = rect.top + rect.height / 2;
+            const viewportCenter = windowHeight / 2;
+            
+            if (itemCenter < viewportCenter) {
+                item.classList.add('completed');
+                item.classList.remove('active');
+            } else if (rect.top < windowHeight - 150 && rect.bottom > 150) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', updateHeartColors);
+    window.addEventListener('resize', updateHeartColors);
+    updateHeartColors();
+});

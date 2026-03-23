@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Павел & Бибизьяна | Приглашение на свадьбу</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap"
@@ -16,16 +18,13 @@
     <!-- СТАРТОВАЯ СТРАНИЦА С CSS-КОНВЕРТОМ -->
     <div class="cover-page" id="coverPage">
         <div class="envelope-wrapper">
-            <div class="envelope-css" id="envelope">
-                <!-- Верхняя крышка -->
+            <div class="envelope-css" id="envelope" role="button" tabindex="0" aria-label="Открыть приглашение">
                 <div class="envelope-css-flap"></div>
-                <!-- Тело конверта -->
                 <div class="envelope-css-body">
                     <div class="envelope-css-heart">
                         <i class="fas fa-heart"></i>
                     </div>
                 </div>
-                <!-- Внутреннее письмо -->
                 <div class="envelope-css-letter">
                     <div class="letter-inner">
                         <p class="letter-save">SAVE THE DATE</p>
@@ -62,9 +61,8 @@
                     и с радостью приглашаем вас разделить с нами<br>
                     радость главного события в нашей жизни
                 </p>
-                <!-- КНОПКА МУЗЫКИ -->
-                <button id="musicToggleBtn" class="music-button">
-                    <i class="fas fa-music"></i>
+                <button id="musicToggleBtn" class="music-button" aria-label="Включить фоновую музыку">
+                    <i class="fas fa-music" aria-hidden="true"></i>
                     <span>Включить музыку</span>
                 </button>
             </div>
@@ -85,6 +83,39 @@
             </div>
         </section>
 
+
+
+      <!-- Календарь -->
+
+        <section class="calendar-section">
+            <div class="container">
+                <h2 class="section-title">Долгожданный день</h2>
+                <div class="calendar-wrapper">
+                    <div class="calendar">
+                        <div class="calendar-header">
+                            <span class="calendar-month">АВГУСТ</span>
+                            <span class="calendar-year">2026</span>
+                        </div>
+                        <div class="calendar-weekdays">
+                            <span>ПН</span><span>ВТ</span><span>СР</span><span>ЧТ</span><span>ПТ</span><span>СБ</span><span>ВС</span>
+                        </div>
+                        <div class="calendar-days">
+                            <!-- 1 августа 2026 - суббота -->
+                            <span></span><span></span><span></span><span></span><span></span>
+                            <span>1</span>
+                            <!-- 2 августа с сердечком -->
+                            <span class="wedding-day">2</span>
+                            <span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+                            <span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span>
+                            <span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span>
+                            <span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
+                            <span>31</span>
+                        </div>
+                    </div>
+                    <p class="calendar-note">2 августа 2026 — наш особенный день!</p>
+                </div>
+            </div>
+        </section>
         <!-- Таймер обратного отсчета -->
         <section class="timer-section">
             <div class="container">
@@ -109,31 +140,84 @@
                 </div>
             </div>
         </section>
-
         <!-- Программа дня -->
         <section class="schedule">
             <div class="container">
                 <h2 class="section-title">Программа дня</h2>
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="time">15:30</div>
-                        <div class="event">Сбор гостей</div>
+                        <div class="timeline-left">
+                            <div class="timeline-time">15:30</div>
+                        </div>
+                        <div class="timeline-heart">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="timeline-right">
+                            <div class="timeline-content">
+                                <h3>Сбор гостей</h3>
+                                <p>Просим взять с собой хорошее настроение и свои улыбки</p>
+                            </div>
+                        </div>
                     </div>
+                    
                     <div class="timeline-item">
-                        <div class="time">16:00</div>
-                        <div class="event">Церемония</div>
+                        <div class="timeline-left">
+                            <div class="timeline-time">16:00</div>
+                        </div>
+                        <div class="timeline-heart">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="timeline-right">
+                            <div class="timeline-content">
+                                <h3>Церемония</h3>
+                                <p>Вы станете свидетелями создания новой семьи — нашей семьи</p>
+                            </div>
+                        </div>
                     </div>
+                    
                     <div class="timeline-item">
-                        <div class="time">17:00</div>
-                        <div class="event">Фуршет</div>
+                        <div class="timeline-left">
+                            <div class="timeline-time">17:00</div>
+                        </div>
+                        <div class="timeline-heart">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="timeline-right">
+                            <div class="timeline-content">
+                                <h3>Фуршет</h3>
+                                <p>Легкие закуски и приятное общение</p>
+                            </div>
+                        </div>
                     </div>
+                    
                     <div class="timeline-item">
-                        <div class="time">19:00</div>
-                        <div class="event">Банкет</div>
+                        <div class="timeline-left">
+                            <div class="timeline-time">19:00</div>
+                        </div>
+                        <div class="timeline-heart">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="timeline-right">
+                            <div class="timeline-content">
+                                <h3>Банкет</h3>
+                                <p>Вкусная еда, приятная музыка, танцы и веселье</p>
+                            </div>
+                        </div>
                     </div>
+                    
                     <div class="timeline-item">
-                        <div class="time">23:00</div>
-                        <div class="event">Завершение вечера</div>
+                        <div class="timeline-left">
+                            <div class="timeline-time">23:00</div>
+                        </div>
+                        <div class="timeline-heart">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="timeline-right">
+                            <div class="timeline-content">
+                                <h3>Завершение вечера</h3>
+                                <p>Финальный аккорд нашего праздника</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -143,11 +227,9 @@
         <section class="location">
             <div class="container">
                 <h2 class="section-title">Место встречи</h2>
-                
                 <div class="location-photo">
-                    <img src="img/img1.png" alt="Оранжерея" class="location-img">
+                    <img src="img/img1.png" alt="Оранжерея" class="location-img" loading="lazy">
                 </div>
-                
                 <p class="location-name">🌿 Пиздатейшая "Оранжерея"</p>
                 <p class="location-address">Зименки, ул. Пушкина, дом колотушкина</p>
                 <a href="https://yandex.ru/maps/-/CPFjiJy9" class="map-button" target="_blank">
@@ -174,6 +256,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Организационные моменты -->
         <section class="info">
             <div class="container">
@@ -181,7 +264,6 @@
                 <p class="info-subtitle">
                     Чтобы наш праздник прошёл идеально, обратите внимание на несколько важных деталей
                 </p>
-                
                 <ul class="info-list">
                     <li class="info-item">
                         <div class="info-icon">
@@ -192,7 +274,6 @@
                             <p>Ваше присутствие — лучший подарок. Но если вы хотите нас порадовать, мы будем благодарны за денежный вклад в наш семейный бюджет. Это поможет нам воплотить общие мечты и планы.</p>
                         </div>
                     </li>
-                    
                     <li class="info-item">
                         <div class="info-icon">
                             <i class="fas fa-seedling"></i>
@@ -202,7 +283,6 @@
                             <p>Если вы хотели подарить живые цветы, мы будем рады, если вместо этого вы поддержите нашу любовь к растениям — оформите <a href="https://flowwow.com/ru/moscow/subscription/" target="_blank" class="info-link">цветочную подписку</a>. Это подарок, который будет радовать нас каждый месяц!</p>
                         </div>
                     </li>
-                    
                     <li class="info-item">
                         <div class="info-icon">
                             <i class="fas fa-child"></i>
@@ -230,14 +310,12 @@
             <div class="container">
                 <h2 class="section-title">Ждем вас!</h2>
                 <p class="rsvp-subtitle">Пожалуйста, подтвердите свое присутствие до 1 мая 2026</p>
-
                 <form id="weddingForm" class="rsvp-form" method="POST"
                     action="https://script.google.com/macros/s/AKfycbwRc1y2FSunMVRj8G6qFWQ6SUKLwrbx8UJk7pt7SmMLjQcn8iMUxVFx2K6oz9jwNKZT9w/exec">
                     <div class="form-group">
                         <label for="name">Ваше имя и фамилия *</label>
                         <input type="text" id="name" name="name" required placeholder="Например: Иван Петров">
                     </div>
-
                     <div class="form-group">
                         <label for="attendance">Сможете присутствовать? *</label>
                         <select id="attendance" name="attendance" required>
@@ -246,22 +324,18 @@
                             <option value="no">Нет, к сожалению</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label for="guests">Количество гостей (включая вас) *</label>
                         <input type="number" id="guests" name="guests" min="1" max="5" value="1" required>
                     </div>
-
                     <div class="form-group">
                         <label for="diet">Особенности питания (аллергии и т.д.)</label>
                         <textarea id="diet" name="diet" rows="2" placeholder="Например: не ем мясо..."></textarea>
                     </div>
-
                     <div class="form-group">
                         <label for="wishes">Пожелания молодоженам</label>
                         <textarea id="wishes" name="wishes" rows="3" placeholder="Ваши теплые слова..."></textarea>
                     </div>
-
                     <button type="submit" class="submit-btn" id="submitBtn">Отправить</button>
                     <div id="formMessage" class="form-message"></div>
                 </form>
