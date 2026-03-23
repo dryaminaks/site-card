@@ -245,3 +245,57 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', updateHeartColors);
     updateHeartColors();
 });
+// ===== АНИМАЦИЯ БЛОКОВ ОРГАНИЗАЦИОННЫХ МОМЕНТОВ ДЛЯ МОБИЛЬНЫХ =====
+function initInfoItemsAnimation() {
+    const infoItems = document.querySelectorAll('.info-item');
+    
+    if (!infoItems.length) return;
+    
+    // Проверяем, мобильное ли устройство
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        const observerInfo = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible-mobile');
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        infoItems.forEach(item => {
+            observerInfo.observe(item);
+        });
+    }
+}
+
+// Запускаем анимацию
+initInfoItemsAnimation();
+
+// При изменении размера окна перезапускаем (на случай поворота экрана)
+window.addEventListener('resize', function() {
+    const infoItems = document.querySelectorAll('.info-item');
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        infoItems.forEach(item => {
+            item.classList.remove('visible-mobile');
+        });
+        
+        const observerInfo = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible-mobile');
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        infoItems.forEach(item => {
+            observerInfo.observe(item);
+        });
+    } else {
+        infoItems.forEach(item => {
+            item.classList.remove('visible-mobile');
+        });
+    }
+});
