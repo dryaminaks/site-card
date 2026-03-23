@@ -1165,3 +1165,50 @@ footer p {
     }
 }
 
+/* Анимация появления блоков при прокрутке */
+.story,
+.timer-section,
+.calendar-section,
+.schedule,
+.location,
+.dresscode,
+.info,
+.rsvp {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.story.visible-scroll,
+.timer-section.visible-scroll,
+.calendar-section.visible-scroll,
+.schedule.visible-scroll,
+.location.visible-scroll,
+.dresscode.visible-scroll,
+.info.visible-scroll,
+.rsvp.visible-scroll {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Блок организационных моментов анимируем отдельно, чтобы контент был виден */
+.info {
+    opacity: 1;
+    transform: none;
+}
+
+.info .info-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.info.visible-scroll .info-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Поэтапное появление элементов внутри .info */
+.info.visible-scroll .info-item:nth-child(1) { transition-delay: 0.1s; }
+.info.visible-scroll .info-item:nth-child(2) { transition-delay: 0.2s; }
+.info.visible-scroll .info-item:nth-child(3) { transition-delay: 0.3s; }
+.info.visible-scroll .info-item:nth-child(4) { transition-delay: 0.4s; }

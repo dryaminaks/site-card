@@ -105,24 +105,6 @@ function updateTimer() {
 updateTimer();
 setInterval(updateTimer, 1000);
 
-// ===== ПОЯВЛЕНИЕ ЭЛЕМЕНТОВ ПРИ ПРОКРУТКЕ =====
-const sections = document.querySelectorAll('.invite-page section:not(.hero)');
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = 1;
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, { threshold: 0.1 });
-
-sections.forEach(section => {
-    section.style.opacity = 0;
-    section.style.transform = 'translateY(30px)';
-    section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-    observer.observe(section);
-});
-
 // ===== ФОРМА (отправка в Google Таблицу) =====
 const weddingForm = document.getElementById('weddingForm');
 if (weddingForm) {
@@ -173,7 +155,6 @@ if (weddingForm) {
 
 // ===== АНИМАЦИЯ ПРОГРАММЫ ДНЯ =====
 document.addEventListener('DOMContentLoaded', function() {
-    // Анимация появления линии и сердечек
     const timeline = document.querySelector('.timeline');
     const hearts = document.querySelectorAll('.timeline-heart');
     
@@ -181,12 +162,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const observerTimeline = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Анимация линии с задержкой
                     setTimeout(() => {
                         timeline.classList.add('animate');
                     }, 200);
                     
-                    // Анимация сердечек с задержкой
                     hearts.forEach((heart, index) => {
                         setTimeout(() => {
                             heart.classList.add('animate');
@@ -201,7 +180,6 @@ document.addEventListener('DOMContentLoaded', function() {
         observerTimeline.observe(timeline);
     }
     
-    // Анимация появления пунктов программы
     const timelineItems = document.querySelectorAll('.timeline-item');
     
     if (timelineItems.length) {
@@ -220,7 +198,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Добавляем класс completed при скролле (для изменения цвета сердечек)
     function updateHeartColors() {
         const items = document.querySelectorAll('.timeline-item');
         const windowHeight = window.innerHeight;
@@ -245,13 +222,13 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', updateHeartColors);
     updateHeartColors();
 });
+
 // ===== АНИМАЦИЯ БЛОКОВ ОРГАНИЗАЦИОННЫХ МОМЕНТОВ ДЛЯ МОБИЛЬНЫХ =====
 function initInfoItemsAnimation() {
     const infoItems = document.querySelectorAll('.info-item');
     
     if (!infoItems.length) return;
     
-    // Проверяем, мобильное ли устройство
     const isMobile = window.innerWidth <= 768;
     
     if (isMobile) {
@@ -269,10 +246,8 @@ function initInfoItemsAnimation() {
     }
 }
 
-// Запускаем анимацию
 initInfoItemsAnimation();
 
-// При изменении размера окна перезапускаем (на случай поворота экрана)
 window.addEventListener('resize', function() {
     const infoItems = document.querySelectorAll('.info-item');
     const isMobile = window.innerWidth <= 768;
@@ -298,4 +273,32 @@ window.addEventListener('resize', function() {
             item.classList.remove('visible-mobile');
         });
     }
+});
+
+// ===== АНИМАЦИЯ ПОЯВЛЕНИЯ И ИСЧЕЗНОВЕНИЯ БЛОКОВ ПРИ ПРОКРУТКЕ =====
+function initScrollAnimation() {
+    const blocks = document.querySelectorAll('.story, .timer-section, .calendar-section, .schedule, .location, .dresscode, .rsvp');
+    
+    if (!blocks.length) return;
+    
+    const observerBlocks = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Блок появился в зоне видимости
+                entry.target.classList.add('visible-scroll');
+            } else {
+                // Блок ушел из зоны видимости
+                entry.target.classList.remove('visible-scroll');
+            }
+        });
+    }, { threshold: 0.2 }); // 20% блока видно - появляется, меньше 20% - исчезает
+    
+    blocks.forEach(block => {
+        observerBlocks.observe(block);
+    });
+}
+
+// Запускаем анимацию
+document.addEventListener('DOMContentLoaded', function() {
+    initScrollAnimation();
 });
