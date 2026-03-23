@@ -2,49 +2,43 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <!-- Важно для мобильных устройств -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Бибизьяна & Павел | Приглашение на свадьбу</title>
-    <!-- Подключаем Font Awesome для иконок -->
+    <title>Павел & Бибизьяна | Приглашение на свадьбу</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Красивые шрифты как в примере -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    <!-- Подключаем CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Главный экран с фото -->
+    <!-- СТАРТОВАЯ СТРАНИЦА С CSS-КОНВЕРТОМ -->
     <div class="cover-page" id="coverPage">
-        <div class="cover-content">
-            <!-- Фон с затемнением -->
-            <div class="cover-overlay"></div>
-            
-            <!-- Основной контент обложки -->
-            <div class="cover-inner">
-                <p class="cover-save-date">SAVE THE DATE</p>
-                
-                <h1 class="cover-names">
-                    <span class="cover-names-line">Александра</span>
-                    <span class="cover-names-ampersand">&</span>
-                    <span class="cover-names-line">Михаил</span>
-                </h1>
-                
-                <p class="cover-date">15 июня 2026</p>
-                
-                <button class="cover-button" id="openInviteBtn">
-                    ОТКРЫТЬ ПРИГЛАШЕНИЕ
-                </button>
-                
-                <p class="cover-note">
-                    нажмите, чтобы открыть приглашение
-                </p>
+        <div class="envelope-wrapper">
+            <div class="envelope-css" id="envelope">
+                <!-- Верхняя крышка -->
+                <div class="envelope-css-flap"></div>
+                <!-- Тело конверта -->
+                <div class="envelope-css-body">
+                    <div class="envelope-css-heart">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                </div>
+                <!-- Внутреннее письмо -->
+                <div class="envelope-css-letter">
+                    <div class="letter-inner">
+                        <p class="letter-save">SAVE THE DATE</p>
+                        <h3 class="letter-names">Павел & Бибизьяна</h3>
+                        <p class="letter-date">2 августа 2026</p>
+                    </div>
+                </div>
+                <div class="envelope-css-text">
+                    <span>НАЖМИТЕ, ЧТОБЫ ОТКРЫТЬ</span>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- ОСНОВНОЙ САЙТ (изначально скрыт) -->
     <div class="invite-page" id="invitePage">
-        <!-- Главный экран с фото -->
+        <!-- Главный экран -->
         <section class="hero">
             <div class="hero-overlay"></div>
             <div class="hero-content">
@@ -52,15 +46,12 @@
                     Если эта ссылка попала к вам, значит,<br>
                     вы занимаете важное место в нашей жизни
                 </p>
-                
                 <h1 class="names">
-                    <span class="names-line">Александра</span>
+                    <span class="names-line">Павел</span>
                     <span class="names-ampersand">&</span>
-                    <span class="names-line">Михаил</span>
+                    <span class="names-line">Бибизьяна</span>
                 </h1>
-                
-                <p class="hero-date">15 июня 2026</p>
-                
+                <p class="hero-date">2 августа 2026</p>
                 <p class="hero-invite">
                     Мы решили официально стать той парой,<br>
                     которая бесит всех своим счастьем,<br>
@@ -80,7 +71,7 @@
                     И теперь мы хотим разделить этот праздник с вами — нашими самыми близкими людьми.
                 </p>
                 <p class="story-signature">
-                    С любовью, Бибизьяна и Паша
+                    С любовью, Павел и Бибизьяна
                 </p>
             </div>
         </section>
@@ -148,7 +139,7 @@
                 </div>
                 <p class="location-name">Пиздатейшая "Оранжерея"</p>
                 <p class="location-address">ул. Пушкина, дом колотушкина, Зименки</p>
-                <a href=https://yandex.ru/maps/-/CPFjiJy9 class="map-button" target="_blank">
+                <a href="https://yandex.ru/maps/-/CPFjiJy9" class="map-button" target="_blank">
                     <i class="fas fa-map-marker-alt"></i> Открыть в картах
                 </a>
                 <p class="location-note">
@@ -162,7 +153,7 @@
             <div class="container">
                 <h2 class="section-title">Дресс-код</h2>
                 <p class="dresscode-text">
-                    Мы будет рады видеть вас в нарядных образах в пастельных тонах
+                    Мы будем рады видеть вас в нарядных образах в пастельных тонах
                 </p>
                 <div class="colors">
                     <div class="color-dot" style="background: #f3e5ab;"></div>
@@ -174,57 +165,51 @@
         </section>
 
         <!-- Форма подтверждения (RSVP) -->
-        <!-- Форма подтверждения (RSVP) -->
-        <!-- Форма подтверждения (RSVP) для Formspree -->
-<!-- Форма подтверждения (RSVP) -->
-<section class="rsvp">
-    <div class="container">
-        <h2 class="section-title">Ждем вас!</h2>
-        <p class="rsvp-subtitle">Пожалуйста, подтвердите свое присутствие до 1 мая 2026</p>
-        
-        <form id="weddingForm" class="rsvp-form" target="hidden_iframe" method="POST" action=https://script.google.com/macros/s/AKfycbwRc1y2FSunMVRj8G6qFWQ6SUKLwrbx8UJk7pt7SmMLjQcn8iMUxVFx2K6oz9jwNKZT9w/exec>
-            <div class="form-group">
-                <label for="name">Ваше имя и фамилия *</label>
-                <input type="text" id="name" name="name" required placeholder="Например: Иван Петров">
+        <section class="rsvp">
+            <div class="container">
+                <h2 class="section-title">Ждем вас!</h2>
+                <p class="rsvp-subtitle">Пожалуйста, подтвердите свое присутствие до 1 мая 2026</p>
+                
+                <form id="weddingForm" class="rsvp-form" method="POST" action="https://script.google.com/macros/s/AKfycbwRc1y2FSunMVRj8G6qFWQ6SUKLwrbx8UJk7pt7SmMLjQcn8iMUxVFx2K6oz9jwNKZT9w/exec">
+                    <div class="form-group">
+                        <label for="name">Ваше имя и фамилия *</label>
+                        <input type="text" id="name" name="name" required placeholder="Например: Иван Петров">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="attendance">Сможете присутствовать? *</label>
+                        <select id="attendance" name="attendance" required>
+                            <option value="">Выберите...</option>
+                            <option value="yes">Да, с радостью</option>
+                            <option value="no">Нет, к сожалению</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="guests">Количество гостей (включая вас) *</label>
+                        <input type="number" id="guests" name="guests" min="1" max="5" value="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="diet">Особенности питания (аллергии и т.д.)</label>
+                        <textarea id="diet" name="diet" rows="2" placeholder="Например: не ем мясо..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="wishes">Пожелания молодоженам</label>
+                        <textarea id="wishes" name="wishes" rows="3" placeholder="Ваши теплые слова..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">Отправить</button>
+                    <div id="formMessage" class="form-message"></div>
+                </form>
             </div>
-            
-            <div class="form-group">
-                <label for="attendance">Сможете присутствовать? *</label>
-                <select id="attendance" name="attendance" required>
-                    <option value="">Выберите...</option>
-                    <option value="yes">Да, с радостью</option>
-                    <option value="no">Нет, к сожалению</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="guests">Количество гостей (включая вас) *</label>
-                <input type="number" id="guests" name="guests" min="1" max="5" value="1" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="diet">Особенности питания (аллергии и т.д.)</label>
-                <textarea id="diet" name="diet" rows="2" placeholder="Например: не ем мясо..."></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="wishes">Пожелания молодоженам</label>
-                <textarea id="wishes" name="wishes" rows="3" placeholder="Ваши теплые слова..."></textarea>
-            </div>
-            
-            <button type="submit" class="submit-btn" id="submitBtn">Отправить</button>
-            <div id="formMessage" class="form-message"></div>
-        </form>
-        
-        <!-- Скрытый iframe для отправки формы без перезагрузки -->
-        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-    </div>
-</section>
+        </section>
 
         <!-- Подвал -->
         <footer>
-            <p>С любовью, Бибизьяна и Паша</p>
-            <p class="small">02 августа 2026</p>
+            <p>С любовью, Павел и Бибизьяна</p>
+            <p class="small">2 августа 2026</p>
         </footer>
     </div>
 
