@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Павел & Бибизьяна | Приглашение на свадьбу</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- СТАРТОВАЯ СТРАНИЦА С CSS-КОНВЕРТОМ -->
     <div class="cover-page" id="coverPage">
@@ -58,6 +62,11 @@
                     и с радостью приглашаем вас разделить с нами<br>
                     радость главного события в нашей жизни
                 </p>
+                <!-- КНОПКА МУЗЫКИ -->
+                <button id="musicToggleBtn" class="music-button">
+                    <i class="fas fa-music"></i>
+                    <span>Включить музыку</span>
+                </button>
             </div>
         </section>
 
@@ -66,8 +75,8 @@
             <div class="container">
                 <h2 class="section-title">Наша история</h2>
                 <p class="story-text">
-                    Мы встретились в вк, я ее закадрил. 
-                    С тех пор каждый день наполнен счастьем, улыбками и любовью. 
+                    Мы встретились в вк, я ее закадрил.
+                    С тех пор каждый день наполнен счастьем, улыбками и любовью.
                     И теперь мы хотим разделить этот праздник с вами — нашими самыми близкими людьми.
                 </p>
                 <p class="story-signature">
@@ -169,13 +178,14 @@
             <div class="container">
                 <h2 class="section-title">Ждем вас!</h2>
                 <p class="rsvp-subtitle">Пожалуйста, подтвердите свое присутствие до 1 мая 2026</p>
-                
-                <form id="weddingForm" class="rsvp-form" method="POST" action="https://script.google.com/macros/s/AKfycbwRc1y2FSunMVRj8G6qFWQ6SUKLwrbx8UJk7pt7SmMLjQcn8iMUxVFx2K6oz9jwNKZT9w/exec">
+
+                <form id="weddingForm" class="rsvp-form" method="POST"
+                    action="https://script.google.com/macros/s/AKfycbwRc1y2FSunMVRj8G6qFWQ6SUKLwrbx8UJk7pt7SmMLjQcn8iMUxVFx2K6oz9jwNKZT9w/exec">
                     <div class="form-group">
                         <label for="name">Ваше имя и фамилия *</label>
                         <input type="text" id="name" name="name" required placeholder="Например: Иван Петров">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="attendance">Сможете присутствовать? *</label>
                         <select id="attendance" name="attendance" required>
@@ -184,22 +194,22 @@
                             <option value="no">Нет, к сожалению</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="guests">Количество гостей (включая вас) *</label>
                         <input type="number" id="guests" name="guests" min="1" max="5" value="1" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="diet">Особенности питания (аллергии и т.д.)</label>
                         <textarea id="diet" name="diet" rows="2" placeholder="Например: не ем мясо..."></textarea>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="wishes">Пожелания молодоженам</label>
                         <textarea id="wishes" name="wishes" rows="3" placeholder="Ваши теплые слова..."></textarea>
                     </div>
-                    
+
                     <button type="submit" class="submit-btn" id="submitBtn">Отправить</button>
                     <div id="formMessage" class="form-message"></div>
                 </form>
@@ -215,4 +225,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

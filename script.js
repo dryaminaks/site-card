@@ -1,34 +1,87 @@
-// ===== CSS КОНВЕРТ С АНИМАЦИЕЙ =====
+// ===== МУЗЫКА ДЛЯ АТМОСФЕРЫ =====
+document.addEventListener('DOMContentLoaded', function() {
+    const musicBtn = document.getElementById('musicToggleBtn');
+    
+    // Если кнопка не найдена — выходим (чтобы не было ошибки)
+    if (!musicBtn) return;
+    
+    // Создаем аудиоэлемент (романтическая фоновая музыка)
+    const bgMusic = new Audio('music/music.mp3');
+    bgMusic.loop = true; // Зацикливаем
+    bgMusic.volume = 0.3; // Громкость 30% (не навязчиво)
+    
+    let isPlaying = false;
+    
+    // Обновление UI кнопки
+    function updateButtonUI() {
+        if (isPlaying) {
+            musicBtn.classList.add('playing');
+            musicBtn.innerHTML = '<i class="fas fa-pause"></i><span>Выключить музыку</span>';
+        } else {
+            musicBtn.classList.remove('playing');
+            musicBtn.innerHTML = '<i class="fas fa-music"></i><span>Включить музыку</span>';
+        }
+    }
+    
+    // Обработчик клика по кнопке
+    musicBtn.addEventListener('click', function() {
+        if (isPlaying) {
+            bgMusic.pause();
+            isPlaying = false;
+        } else {
+            // Пытаемся воспроизвести (браузеры могут блокировать автовоспроизведение)
+            bgMusic.play().catch(e => {
+                console.log('Автовоспроизведение заблокировано:', e);
+                // Показываем подсказку
+                musicBtn.innerHTML = '<i class="fas fa-music"></i><span>Нажмите ещё раз</span>';
+                setTimeout(() => updateButtonUI(), 1000);
+            });
+            isPlaying = true;
+        }
+        updateButtonUI();
+    });
+    
+    // Если музыка играла, а пользователь свернул вкладку — ставим на паузу
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden && isPlaying) {
+            bgMusic.pause();
+        } else if (!document.hidden && isPlaying) {
+            bgMusic.play();
+        }
+    });
+});
+
+// ===== КОНВЕРТ С АНИМАЦИЕЙ =====
 document.addEventListener('DOMContentLoaded', function() {
     const envelope = document.getElementById('envelope');
     const coverPage = document.getElementById('coverPage');
     const invitePage = document.getElementById('invitePage');
     
+    if (!envelope) return;
+    
     // Создаем звук при открытии
     const openSound = new Audio('https://www.soundjay.com/misc/sounds/envelope-opening-01.mp3');
     openSound.load();
     
-    if (envelope) {
-        envelope.addEventListener('click', function() {
-            // Воспроизводим звук
-            openSound.play().catch(e => console.log('Звук не воспроизвелся:', e));
-            
-            // Добавляем класс open для анимации конверта
-            this.classList.add('open');
-            
-            // Через 0.6 секунд показываем основной сайт
-            setTimeout(() => {
-                coverPage.classList.add('hidden');
-                invitePage.classList.add('visible');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 600);
-        });
-    }
+    envelope.addEventListener('click', function() {
+        // Воспроизводим звук
+        openSound.play().catch(e => console.log('Звук не воспроизвелся:', e));
+        
+        // Добавляем класс open для анимации конверта
+        this.classList.add('open');
+        
+        // Через 0.6 секунд показываем основной сайт
+        setTimeout(() => {
+            if (coverPage) coverPage.classList.add('hidden');
+            if (invitePage) invitePage.classList.add('visible');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 600);
+    });
 });
 
 // ===== ТАЙМЕР ОБРАТНОГО ОТСЧЕТА =====
 function updateTimer() {
-    const weddingDate = new Date(2026, 7, 2, 14, 0);
+    const weddingDate = new Date(2026, 7, 2, 14, 0); // 2 августа 2026, 14:00
     const now = new Date();
     const diff = weddingDate - now;
     
@@ -50,6 +103,7 @@ function updateTimer() {
     }
 }
 
+// Запускаем таймер
 updateTimer();
 setInterval(updateTimer, 1000);
 
@@ -71,7 +125,7 @@ sections.forEach(section => {
     observer.observe(section);
 });
 
-// ===== ФОРМА =====
+// ===== ФОРМА (отправка в Google Таблицу) =====
 const weddingForm = document.getElementById('weddingForm');
 if (weddingForm) {
     weddingForm.addEventListener('submit', function(e) {
