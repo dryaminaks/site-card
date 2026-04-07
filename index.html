@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 
 <head>
@@ -15,44 +15,8 @@
 </head>
 
 <body>
-    <!-- СТАРТОВАЯ СТРАНИЦА С CSS-КОНВЕРТОМ -->
-    <div class="cover-page" id="coverPage">
-        <div class="envelope-wrapper">
-            <div class="envelope-css" id="envelope" role="button" tabindex="0" aria-label="Открыть приглашение">
-                <div class="mockup-envelope" aria-hidden="true">
-                    <img class="mockup-part mockup-part-left" src="img/_1.svg" alt="">
-                    <img class="mockup-part mockup-part-top" src="img/_2-open.svg" alt="">
-                    <img class="mockup-part mockup-part-bottom" src="img/_2.svg" alt="">
-                    <img class="mockup-part mockup-part-right" src="img/_3.svg" alt="">
-                </div>
-                <p class="envelope-top-text">Для вас<br>кое-что есть ...</p>
-                <div class="wax-seal">открыть</div>
-                <div class="envelope-bottom-text">
-                    <p class="bottom-script">С любовью<br>и надеждой!</p>
-                    <p class="bottom-date">02.08.2026</p>
-                </div>
-                <div class="open-letter-scene" aria-hidden="true">
-                    <p class="open-scene-text">время пронеслось<br>незаметно и у этих двух<br>милых деток скоро<br>свадьба...</p>
-                    <div class="open-scene-hearts">
-                        <span class="heart-one">♥</span>
-                        <span class="heart-two">♥</span>
-                    </div>
-                    <div class="polaroid-stack">
-                        <figure class="polaroid polaroid-left">
-                            <img src="img/Group_173_2_1.png" alt="" loading="eager">
-                        </figure>
-                        <figure class="polaroid polaroid-right">
-                            <img src="img/Group_172_6_1.png" alt="" loading="eager">
-                        </figure>
-                    </div>
-                    <div class="open-scene-question">?</div>
-                    <p class="open-scene-names">Павел &amp;<br>Бибизьяна</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ОСНОВНОЙ САЙТ (изначально скрыт) -->
-    <div class="invite-page" id="invitePage">
+
+    <div class="invite-page visible" id="invitePage">
         <!-- Главный экран -->
         <section class="hero">
             <div class="hero-overlay"></div>
@@ -270,13 +234,13 @@
                 <div class="carousel-section">
                     <h3 class="carousel-title">Мужские образы</h3>
                     <div class="simple-carousel">
-                        <button class="simple-prev" data-carousel="male">❮</button>
+                        <button class="simple-prev" data-carousel="male" aria-label="Предыдущий слайд">&#10094;</button>
                         <div class="simple-track" data-track="male">
                             <div class="simple-slide"><img src="img/obm1.jpg" alt="Мужской образ 1"></div>
                             <div class="simple-slide"><img src="img/ob2m.jpg" alt="Мужской образ 2"></div>
                             <div class="simple-slide"><img src="img/obm3.jpg" alt="Мужской образ 3"></div>
                         </div>
-                        <button class="simple-next" data-carousel="male">❯</button>
+                        <button class="simple-next" data-carousel="male" aria-label="Следующий слайд">&#10095;</button>
                     </div>
                     <div class="simple-dots" data-dots="male"></div>
                 </div>
@@ -285,13 +249,13 @@
                 <div class="carousel-section">
                     <h3 class="carousel-title">Женские образы</h3>
                     <div class="simple-carousel">
-                        <button class="simple-prev" data-carousel="female">❮</button>
+                        <button class="simple-prev" data-carousel="female" aria-label="Предыдущий слайд">&#10094;</button>
                         <div class="simple-track" data-track="female">
                             <div class="simple-slide"><img src="img/ob1.jpg" alt="Женский образ 1"></div>
                             <div class="simple-slide"><img src="img/ob2.jpg" alt="Женский образ 2"></div>
                             <div class="simple-slide"><img src="img/ob3.jpg" alt="Женский образ 3"></div>
                         </div>
-                        <button class="simple-next" data-carousel="female">❯</button>
+                        <button class="simple-next" data-carousel="female" aria-label="Следующий слайд">&#10095;</button>
                     </div>
                     <div class="simple-dots" data-dots="female"></div>
                 </div>

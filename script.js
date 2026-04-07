@@ -1,98 +1,4 @@
-// ===== МУЗЫКА ДЛЯ АТМОСФЕРЫ =====
-document.addEventListener('DOMContentLoaded', function() {
-    const musicBtn = document.getElementById('musicToggleBtn');
-    
-    if (!musicBtn) return;
-    
-    const bgMusic = new Audio('music/music.mp3');
-    bgMusic.loop = true;
-    bgMusic.volume = 0.3;
-    
-    let isPlaying = false;
-    
-    function updateButtonUI() {
-        if (isPlaying) {
-            musicBtn.classList.add('playing');
-            musicBtn.innerHTML = '<i class="fas fa-pause" aria-hidden="true"></i><span>Выключить музыку</span>';
-        } else {
-            musicBtn.classList.remove('playing');
-            musicBtn.innerHTML = '<i class="fas fa-music" aria-hidden="true"></i><span>Включить музыку</span>';
-        }
-    }
-    
-    musicBtn.addEventListener('click', function() {
-        if (isPlaying) {
-            bgMusic.pause();
-            isPlaying = false;
-        } else {
-            bgMusic.play().catch(e => {
-                console.log('Автовоспроизведение заблокировано:', e);
-                musicBtn.innerHTML = '<i class="fas fa-music" aria-hidden="true"></i><span>Нажмите ещё раз</span>';
-                setTimeout(() => updateButtonUI(), 1000);
-            });
-            isPlaying = true;
-        }
-        updateButtonUI();
-    });
-    
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden && isPlaying) {
-            bgMusic.pause();
-        } else if (!document.hidden && isPlaying) {
-            bgMusic.play();
-        }
-    });
-});
-
-// ===== КОНВЕРТ С АНИМАЦИЕЙ =====
-document.addEventListener('DOMContentLoaded', function() {
-    const envelope = document.getElementById('envelope');
-    const coverPage = document.getElementById('coverPage');
-    const invitePage = document.getElementById('invitePage');
-    const openSceneNames = document.querySelector('.open-scene-names');
-    
-    if (!envelope) return;
-    
-    let isEnvelopeOpening = false;
-    
-    // Устанавливаем правильные имена в конверте
-    if (openSceneNames) {
-        openSceneNames.innerHTML = 'Павел &amp;<br>Бибизьяна';
-    }
-    
-    const openSound = new Audio('https://www.soundjay.com/misc/sounds/envelope-opening-01.mp3');
-    openSound.load();
-    
-    envelope.addEventListener('click', function() {
-        openEnvelope();
-    });
-    
-    envelope.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            openEnvelope();
-        }
-    });
-    
-    function openEnvelope() {
-        if (isEnvelopeOpening) return;
-        isEnvelopeOpening = true;
-        openSound.play().catch(e => console.log('Звук не воспроизвелся:', e));
-        envelope.classList.add('opening');
-        
-        setTimeout(() => {
-            envelope.classList.add('open');
-        }, 760);
-        
-        setTimeout(() => {
-            if (coverPage) coverPage.classList.add('hidden');
-            if (invitePage) invitePage.classList.add('visible');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 3200);
-    }
-});
-
-// ===== ТАЙМЕР ОБРАТНОГО ОТСЧЕТА =====
+﻿// ===== ТАЙМЕР ОБРАТНОГО ОТСЧЕТА =====
 function updateTimer() {
     const weddingDate = new Date(2026, 7, 2, 14, 0);
     const now = new Date();
@@ -376,125 +282,151 @@ function initScrollAnimation() {
 
 // ===== ПРОСТАЯ КАРУСЕЛЬ (100% РАБОТАЕТ) =====
 function initSimpleCarousel() {
-    const prevButtons = document.querySelectorAll('.simple-prev');
-    const nextButtons = document.querySelectorAll('.simple-next');
-    
-    function updateDots(track, currentIndex) {
-        const dotsContainer = track.parentNode.parentNode.querySelector('.simple-dots');
-        if (!dotsContainer) return;
-        
-        const slides = track.querySelectorAll('.simple-slide');
-        const dots = dotsContainer.querySelectorAll('.simple-dot');
-        
-        dots.forEach((dot, i) => {
-            if (i === currentIndex) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
+    function getSlides(track) {
+        return Array.from(track.querySelectorAll('.simple-slide'));
+    }
+
+    function getDotsContainer(track) {
+        return track.closest('.carousel-section')?.querySelector('.simple-dots') || null;
+    }
+
+    function getCenteredIndex(track) {
+        const slides = getSlides(track);
+        if (!slides.length) return 0;
+
+        const trackCenter = track.scrollLeft + (track.clientWidth / 2);
+        let closestIndex = 0;
+        let closestDistance = Infinity;
+
+        slides.forEach((slide, index) => {
+            const slideCenter = slide.offsetLeft + (slide.offsetWidth / 2);
+            const distance = Math.abs(slideCenter - trackCenter);
+
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestIndex = index;
             }
         });
+
+        return closestIndex;
     }
-    
+
+    function updateDots(track, currentIndex) {
+        const dotsContainer = getDotsContainer(track);
+        if (!dotsContainer) return;
+
+        const dots = dotsContainer.querySelectorAll('.simple-dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+    }
+
+    function updateActiveSlide(track, currentIndex) {
+        const slides = getSlides(track);
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentIndex);
+        });
+    }
+
     function scrollToSlide(track, index) {
-        const slides = track.querySelectorAll('.simple-slide');
-        if (index < 0) index = 0;
-        if (index >= slides.length) index = slides.length - 1;
-        
-        const slide = slides[index];
-        if (slide) {
-            slide.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            updateDots(track, index);
-        }
+        const slides = getSlides(track);
+        if (!slides.length) return 0;
+
+        const safeIndex = Math.max(0, Math.min(index, slides.length - 1));
+        const slide = slides[safeIndex];
+        const targetLeft = slide.offsetLeft - ((track.clientWidth - slide.offsetWidth) / 2);
+
+        track.scrollTo({
+            left: Math.max(0, targetLeft),
+            behavior: 'smooth'
+        });
+
+        updateDots(track, safeIndex);
+        updateActiveSlide(track, safeIndex);
+        return safeIndex;
     }
-    
+
     function setupCarousel(track, prevBtn, nextBtn) {
-        const slides = track.querySelectorAll('.simple-slide');
-        if (slides.length === 0) return;
-        
+        const slides = getSlides(track);
+        if (!slides.length) return;
+
         let currentIndex = 0;
-        
-        // Создаём dots
-        const dotsContainer = track.parentNode.parentNode.querySelector('.simple-dots');
+        let scrollTicking = false;
+        const lastIndex = slides.length - 1;
+        const dotsContainer = getDotsContainer(track);
+
+        function goToSlide(index) {
+            currentIndex = scrollToSlide(track, index);
+        }
+
         if (dotsContainer) {
             dotsContainer.innerHTML = '';
-            for (let i = 0; i < slides.length; i++) {
-                const dot = document.createElement('span');
+            slides.forEach((_, index) => {
+                const dot = document.createElement('button');
+                dot.type = 'button';
                 dot.classList.add('simple-dot');
-                if (i === 0) dot.classList.add('active');
+                dot.setAttribute('aria-label', `Перейти к слайду ${index + 1}`);
+                dot.classList.toggle('active', index === 0);
                 dot.addEventListener('click', function() {
-                    scrollToSlide(track, i);
+                    goToSlide(index);
                 });
                 dotsContainer.appendChild(dot);
-            }
+            });
         }
-        
-        // Отслеживаем скролл
+
         track.addEventListener('scroll', function() {
-            const scrollLeft = track.scrollLeft;
-            const slideWidth = slides[0].offsetWidth;
-            const gap = 15;
-            const newIndex = Math.round(scrollLeft / (slideWidth + gap));
-            if (newIndex !== currentIndex && newIndex >= 0 && newIndex < slides.length) {
-                currentIndex = newIndex;
-                updateDots(track, currentIndex);
-            }
+            if (scrollTicking) return;
+
+            scrollTicking = true;
+            window.requestAnimationFrame(function() {
+                const newIndex = getCenteredIndex(track);
+                if (newIndex !== currentIndex) {
+                    currentIndex = newIndex;
+                    updateDots(track, currentIndex);
+                    updateActiveSlide(track, currentIndex);
+                }
+                scrollTicking = false;
+            });
         });
-        
-        // Кнопки
+
         if (prevBtn) {
             prevBtn.addEventListener('click', function() {
-                const slidesList = track.querySelectorAll('.simple-slide');
-                const scrollLeft = track.scrollLeft;
-                const slideWidth = slidesList[0].offsetWidth;
-                const gap = 15;
-                const current = Math.round(scrollLeft / (slideWidth + gap));
-                if (current > 0) {
-                    scrollToSlide(track, current - 1);
-                }
+                goToSlide(currentIndex <= 0 ? lastIndex : currentIndex - 1);
             });
         }
-        
+
         if (nextBtn) {
             nextBtn.addEventListener('click', function() {
-                const slidesList = track.querySelectorAll('.simple-slide');
-                const scrollLeft = track.scrollLeft;
-                const slideWidth = slidesList[0].offsetWidth;
-                const gap = 15;
-                const current = Math.round(scrollLeft / (slideWidth + gap));
-                if (current < slidesList.length - 1) {
-                    scrollToSlide(track, current + 1);
-                }
+                goToSlide(currentIndex >= lastIndex ? 0 : currentIndex + 1);
             });
         }
-        
-        // Начинаем с первого слайда
-        setTimeout(function() {
-            scrollToSlide(track, 0);
-        }, 100);
+
+        window.addEventListener('resize', function() {
+            goToSlide(currentIndex);
+        });
+
+        window.requestAnimationFrame(function() {
+            goToSlide(0);
+        });
     }
-    
-    // Настраиваем мужскую карусель
+
     const maleTrack = document.querySelector('.simple-track[data-track="male"]');
     const malePrev = document.querySelector('.simple-prev[data-carousel="male"]');
     const maleNext = document.querySelector('.simple-next[data-carousel="male"]');
     if (maleTrack) setupCarousel(maleTrack, malePrev, maleNext);
-    
-    // Настраиваем женскую карусель
+
     const femaleTrack = document.querySelector('.simple-track[data-track="female"]');
     const femalePrev = document.querySelector('.simple-prev[data-carousel="female"]');
     const femaleNext = document.querySelector('.simple-next[data-carousel="female"]');
     if (femaleTrack) setupCarousel(femaleTrack, femalePrev, femaleNext);
 }
 
-// Запускаем
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSimpleCarousel);
 } else {
     initSimpleCarousel();
 }
 
-// Запускаем все анимации после загрузки
 document.addEventListener('DOMContentLoaded', function() {
     initScrollAnimation();
-    initDressCodeCarousels();
 });
