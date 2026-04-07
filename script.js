@@ -261,7 +261,7 @@ window.addEventListener('resize', function() {
 
 // ===== АНИМАЦИЯ ПОЯВЛЕНИЯ И ИСЧЕЗНОВЕНИЯ БЛОКОВ ПРИ ПРОКРУТКЕ =====
 function initScrollAnimation() {
-    const blocks = document.querySelectorAll('.story, .timer-section, .calendar-section, .schedule, .location, .dresscode, .info, .rsvp');
+    const blocks = document.querySelectorAll('.story, .timer-section, .calendar-section, .schedule, .location, .dresscode, .info, .pet-dressup, .rsvp');
     
     if (!blocks.length) return;
 
@@ -291,6 +291,226 @@ function initScrollAnimation() {
     window.addEventListener('scroll', updateBlockVisibility, { passive: true });
     window.addEventListener('resize', updateBlockVisibility);
     updateBlockVisibility();
+}
+
+function initPetDressup() {
+    const board = document.getElementById('petDressup');
+    if (!board) return;
+
+    const itemButtons = board.querySelectorAll('.pet-item');
+    const accessoryRotation = {
+        bow: 14,
+        bag: -10,
+        envelope: -14
+    };
+    const stage = board.querySelector('.pet-stage');
+    const calibrationToggle = document.getElementById('petCalibrationToggle');
+    const calibrationHint = document.getElementById('petCalibrationHint');
+    const calibrationOutput = document.getElementById('petCalibrationOutput');
+    const calibrationMarkers = document.getElementById('petCalibrationMarkers');
+    const calibrationSteps = [
+        { key: 'bow', label: 'Бантик' },
+        { key: 'bag', label: 'Сумочка' },
+        { key: 'envelope', label: 'Деньги' }
+    ];
+    let isCalibrating = false;
+    let calibrationIndex = 0;
+    let calibrationPoints = [];
+
+    function getAccessoryTransform(itemName, options = {}) {
+        const {
+            x = 0,
+            y = 0,
+            scale = 1,
+            spin = 0
+        } = options;
+
+        const baseRotation = accessoryRotation[itemName] || 0;
+        return `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale}) rotate(${baseRotation + spin}deg)`;
+    }
+
+    function animateAccessory(button, accessory, shouldShow) {
+        const itemName = accessory.dataset.accessory;
+        const buttonRect = button.getBoundingClientRect();
+        const accessoryRect = accessory.getBoundingClientRect();
+
+        const buttonCenterX = buttonRect.left + (buttonRect.width / 2);
+        const buttonCenterY = buttonRect.top + (buttonRect.height / 2);
+        const accessoryCenterX = accessoryRect.left + (accessoryRect.width / 2);
+        const accessoryCenterY = accessoryRect.top + (accessoryRect.height / 2);
+        const deltaX = buttonCenterX - accessoryCenterX;
+        const deltaY = buttonCenterY - accessoryCenterY;
+
+        if (accessory._animation) {
+            accessory._animation.cancel();
+            accessory._animation = null;
+        }
+
+        if (shouldShow) {
+            accessory.classList.add('is-visible');
+            accessory.style.transform = getAccessoryTransform(itemName, {
+                x: deltaX,
+                y: deltaY,
+                scale: 0.22,
+                spin: -360
+            });
+
+            requestAnimationFrame(() => {
+                accessory._animation = accessory.animate([
+                    {
+                        opacity: 0,
+                        transform: getAccessoryTransform(itemName, {
+                            x: deltaX,
+                            y: deltaY,
+                            scale: 0.22,
+                            spin: -360
+                        })
+                    },
+                    {
+                        opacity: 1,
+                        transform: getAccessoryTransform(itemName)
+                    }
+                ], {
+                    duration: 900,
+                    easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+                    fill: 'forwards'
+                });
+            });
+
+            return;
+        }
+
+        accessory._animation = accessory.animate([
+            {
+                opacity: 1,
+                transform: getAccessoryTransform(itemName)
+            },
+            {
+                opacity: 0,
+                transform: getAccessoryTransform(itemName, {
+                    x: deltaX,
+                    y: deltaY,
+                    scale: 0.22,
+                    spin: 360
+                })
+            }
+        ], {
+            duration: 700,
+            easing: 'cubic-bezier(0.4, 0, 1, 1)',
+            fill: 'forwards'
+        });
+
+        accessory._animation.onfinish = function() {
+            accessory.classList.remove('is-visible');
+            accessory.style.transform = getAccessoryTransform(itemName);
+            accessory._animation = null;
+        };
+    }
+
+    board.querySelectorAll('.pet-accessory').forEach((accessory) => {
+        accessory.style.transform = getAccessoryTransform(accessory.dataset.accessory);
+    });
+
+    itemButtons.forEach((button) => {
+        button.addEventListener('click', function() {
+            const itemName = button.dataset.item;
+            const accessory = board.querySelector(`.pet-accessory[data-accessory="${itemName}"]`);
+            if (!accessory) return;
+
+            const shouldShow = !accessory.classList.contains('is-visible');
+            animateAccessory(button, accessory, shouldShow);
+            button.classList.toggle('is-placed', shouldShow);
+            button.setAttribute('aria-pressed', shouldShow ? 'true' : 'false');
+        });
+    });
+
+    if (!stage || !calibrationToggle || !calibrationHint || !calibrationOutput || !calibrationMarkers) {
+        return;
+    }
+
+    function renderCalibrationMarkers() {
+        calibrationMarkers.innerHTML = calibrationPoints.map((point, index) => `
+            <span
+                class="pet-calibration-marker"
+                data-index="${index + 1}"
+                style="left:${point.xPercent}%; top:${point.yPercent}%;">
+            </span>
+        `).join('');
+    }
+
+    function updateCalibrationHint() {
+        if (!isCalibrating) {
+            calibrationHint.textContent = 'Нажми кнопку, затем кликни по собаке: 1. бантик, 2. сумочка, 3. деньги.';
+            return;
+        }
+
+        const currentStep = calibrationSteps[calibrationIndex];
+        calibrationHint.textContent = `Шаг ${calibrationIndex + 1} из 3: кликни место для "${currentStep.label.toLowerCase()}".`;
+    }
+
+    function stopCalibration() {
+        isCalibrating = false;
+        calibrationIndex = 0;
+        stage.classList.remove('is-calibrating');
+        calibrationToggle.classList.remove('is-active');
+        calibrationToggle.textContent = 'Выбрать 3 точки';
+        updateCalibrationHint();
+    }
+
+    calibrationToggle.addEventListener('click', function() {
+        if (isCalibrating) {
+            calibrationPoints = [];
+            renderCalibrationMarkers();
+            calibrationOutput.textContent = '';
+            stopCalibration();
+            return;
+        }
+
+        calibrationPoints = [];
+        calibrationIndex = 0;
+        renderCalibrationMarkers();
+        calibrationOutput.textContent = '';
+        isCalibrating = true;
+        stage.classList.add('is-calibrating');
+        calibrationToggle.classList.add('is-active');
+        calibrationToggle.textContent = 'Сбросить точки';
+        updateCalibrationHint();
+    });
+
+    stage.addEventListener('click', function(event) {
+        if (!isCalibrating) return;
+
+        if (event.target.closest('.pet-item')) return;
+
+        const rect = stage.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const xPercent = Number(((x / rect.width) * 100).toFixed(2));
+        const yPercent = Number(((y / rect.height) * 100).toFixed(2));
+        const currentStep = calibrationSteps[calibrationIndex];
+
+        calibrationPoints.push({
+            key: currentStep.key,
+            label: currentStep.label,
+            xPercent,
+            yPercent
+        });
+
+        renderCalibrationMarkers();
+        calibrationIndex += 1;
+
+        if (calibrationIndex >= calibrationSteps.length) {
+            const resultText = calibrationPoints
+                .map((point) => `${point.label}: x ${point.xPercent}% y ${point.yPercent}%`)
+                .join(' | ');
+
+            calibrationOutput.textContent = resultText;
+            stopCalibration();
+            return;
+        }
+
+        updateCalibrationHint();
+    });
 }
 
 // ===== ПРОСТАЯ КАРУСЕЛЬ (100% РАБОТАЕТ) =====
@@ -442,4 +662,5 @@ if (document.readyState === 'loading') {
 
 document.addEventListener('DOMContentLoaded', function() {
     initScrollAnimation();
+    initPetDressup();
 });

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 210" fill="none">
+  <defs>
+    <linearGradient id="paper" x1="34" y1="86" x2="188" y2="186" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffdf8"/>
+      <stop offset="1" stop-color="#ede7d8"/>
+    </linearGradient>
+    <linearGradient id="flap" x1="109" y1="104" x2="110" y2="174" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f8f2e4"/>
+      <stop offset="1" stop-color="#e8decb"/>
+    </linearGradient>
+    <filter id="envelopeShadow" x="0" y="0" width="220" height="210" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#c6bda9" flood-opacity="0.38"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#envelopeShadow)">
+    <path d="M47 94L101 58C106 55 114 55 119 58L173 94V172C173 179 167 185 160 185H60C53 185 47 179 47 172V94Z" fill="url(#paper)"/>
+    <path d="M58 97L104 62C108 59 113 59 117 62L162 97L117 130C113 133 107 133 103 130L58 97Z" fill="url(#flap)"/>
+    <path d="M47 94L102 136C107 140 113 140 118 136L173 94" stroke="#ddd4bf" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <g transform="rotate(-11 117 56)">
+      <rect x="79" y="22" width="83" height="47" rx="4" fill="#edf2dc"/>
+      <rect x="89" y="33" width="28" height="17" rx="2" fill="#ced8aa"/>
+      <rect x="121" y="30" width="31" height="4.5" rx="2.25" fill="#bcc78f"/>
+      <rect x="121" y="39" width="24" height="4.5" rx="2.25" fill="#bcc78f"/>
+      <rect x="121" y="48" width="20" height="4.5" rx="2.25" fill="#bcc78f"/>
+      <circle cx="103" cy="41" r="11" fill="#b6c686"/>
+      <path d="M96 41C98 35 107 34 110 40C113 45 109 51 102 51C98 51 94 46 96 41Z" fill="#8ba266"/>
+    </g>
+  </g>
+</svg>

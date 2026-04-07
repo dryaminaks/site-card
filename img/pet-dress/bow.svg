@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 170" fill="none">
+  <defs>
+    <linearGradient id="bowRibbon" x1="30" y1="34" x2="172" y2="132" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff8fc"/>
+      <stop offset="0.42" stop-color="#ffdce8"/>
+      <stop offset="1" stop-color="#f2b8cd"/>
+    </linearGradient>
+    <linearGradient id="bowRibbonDark" x1="58" y1="24" x2="162" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f8d5e3"/>
+      <stop offset="1" stop-color="#e8a1bc"/>
+    </linearGradient>
+    <filter id="bowShadow" x="0" y="0" width="220" height="170" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#d49cb2" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#bowShadow)">
+    <path d="M100 69C69 24 26 21 18 44C10 66 36 95 77 101L100 69Z" fill="url(#bowRibbon)"/>
+    <path d="M121 68C145 19 188 10 201 29C214 47 199 86 148 99L121 68Z" fill="url(#bowRibbonDark)"/>
+    <path d="M102 72L58 146C80 142 95 131 104 116L118 91L102 72Z" fill="url(#bowRibbon)"/>
+    <path d="M120 77L158 143C141 141 127 130 118 115L108 95L120 77Z" fill="url(#bowRibbonDark)"/>
+    <path d="M88 56C96 41 117 37 129 45C140 52 143 72 133 84C122 97 100 98 90 86C82 77 81 66 88 56Z" fill="#f7d3e1"/>
+    <path d="M100 49C112 55 121 66 125 81" stroke="#e6a6bf" stroke-width="4" stroke-linecap="round"/>
+    <path d="M116 49C104 58 99 70 100 87" stroke="#fff7fb" stroke-width="3.5" stroke-linecap="round" opacity=".8"/>
+    <path d="M31 49C46 42 61 49 78 66" stroke="#fff7fb" stroke-width="4" stroke-linecap="round" opacity=".6"/>
+    <path d="M145 57C162 44 177 40 193 43" stroke="#fbe7ef" stroke-width="4" stroke-linecap="round" opacity=".62"/>
+  </g>
+</svg>

@@ -310,6 +310,45 @@
             </div>
         </section>
 
+        <section class="pet-dressup">
+            <div class="container">
+                <h2 class="section-title">Соберём хвостика</h2>
+                <p class="pet-dressup-subtitle">Наша собачка тоже очень хочет на свадьбу. Нажмите на аксессуары, чтобы нарядить её.</p>
+                <div class="pet-dressup-board" id="petDressup">
+                    <div class="pet-calibration" id="petCalibration">
+                        <button class="pet-calibration-toggle" type="button" id="petCalibrationToggle">Выбрать 3 точки</button>
+                        <p class="pet-calibration-hint" id="petCalibrationHint">Нажми кнопку, затем кликни по собаке: 1. бантик, 2. сумочка, 3. деньги.</p>
+                        <div class="pet-calibration-output" id="petCalibrationOutput" aria-live="polite"></div>
+                    </div>
+                    <div class="pet-stage">
+                        <div class="pet-dressup-items" aria-label="Аксессуары для собаки">
+                            <button class="pet-item pet-item-envelope" type="button" data-item="envelope" aria-label="Добавить конверт" aria-pressed="false">
+                                <span class="pet-item-badge"></span>
+                                <img src="img/pet-dress/envelope.svg" alt="" class="pet-item-image">
+                            </button>
+                            <button class="pet-item pet-item-bow" type="button" data-item="bow" aria-label="Добавить бантик" aria-pressed="false">
+                                <span class="pet-item-badge"></span>
+                                <img src="img/pet-dress/bow.svg" alt="" class="pet-item-image">
+                            </button>
+                            <button class="pet-item pet-item-bag" type="button" data-item="bag" aria-label="Добавить сумочку" aria-pressed="false">
+                                <span class="pet-item-badge"></span>
+                                <img src="img/pet-dress/bag.svg" alt="" class="pet-item-image">
+                            </button>
+                        </div>
+                        <div class="pet-stage-note" aria-hidden="true">
+                            <span class="pet-stage-note-arrow"></span>
+                            <span class="pet-stage-note-text">нажми</span>
+                        </div>
+                        <img src="img/model.png" alt="Нарядная собачка" class="pet-model" loading="lazy">
+                        <img src="img/pet-dress/bow.svg" alt="" class="pet-accessory pet-accessory-bow" data-accessory="bow">
+                        <img src="img/pet-dress/bag.svg" alt="" class="pet-accessory pet-accessory-bag" data-accessory="bag">
+                        <img src="img/pet-dress/envelope.svg" alt="" class="pet-accessory pet-accessory-envelope" data-accessory="envelope">
+                        <div class="pet-calibration-markers" id="petCalibrationMarkers" aria-hidden="true"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Форма подтверждения (RSVP) -->
         <section class="rsvp">
             <div class="container">

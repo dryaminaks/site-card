@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 190" fill="none">
+  <defs>
+    <linearGradient id="bagBody" x1="31" y1="63" x2="182" y2="177" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffef9"/>
+      <stop offset="0.45" stop-color="#f9f6ec"/>
+      <stop offset="1" stop-color="#ebe4d3"/>
+    </linearGradient>
+    <linearGradient id="bagShade" x1="92" y1="67" x2="182" y2="173" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#efe8d8" stop-opacity="0"/>
+      <stop offset="1" stop-color="#d9cfbb"/>
+    </linearGradient>
+    <filter id="bagShadow" x="0" y="0" width="220" height="190" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#cfc4af" flood-opacity="0.42"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#bagShadow)">
+    <path d="M58 67C58 31 78 12 108 12C138 12 157 30 162 64" stroke="#d4ccb9" stroke-width="8" stroke-linecap="round"/>
+    <path d="M38 67C37 60 41 56 47 56H172C179 56 184 62 183 69L171 164C170 171 164 176 157 176H61C54 176 48 171 47 164L38 67Z" fill="url(#bagBody)"/>
+    <path d="M134 56H173C180 56 184 62 183 69L171 164C170 171 164 176 157 176H127L134 56Z" fill="url(#bagShade)"/>
+    <path d="M66 59C67 34 81 20 108 20C136 20 149 35 154 59" stroke="#f8f5ec" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+    <path d="M40 72H181" stroke="#e3dccb" stroke-width="3" opacity=".75"/>
+    <path d="M76 134C95 119 104 118 112 134C121 119 131 119 148 134" stroke="#c9bb9d" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M83 140L103 124" stroke="#c9bb9d" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M122 124L142 140" stroke="#c9bb9d" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+</svg>
