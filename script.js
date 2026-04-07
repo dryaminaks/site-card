@@ -269,11 +269,13 @@ function initScrollAnimation() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible-scroll');
-            } else {
-                entry.target.classList.remove('visible-scroll');
+                observerBlocks.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.2 });
+    }, {
+        threshold: 0.18,
+        rootMargin: '0px 0px -10% 0px'
+    });
     
     blocks.forEach(block => {
         observerBlocks.observe(block);
@@ -284,10 +286,6 @@ function initScrollAnimation() {
 function initSimpleCarousel() {
     function getSlides(track) {
         return Array.from(track.querySelectorAll('.simple-slide'));
-    }
-
-    function getRealSlides(track) {
-        return Array.from(track.querySelectorAll('.simple-slide:not(.is-clone)'));
     }
 
     function getDotsContainer(track) {
@@ -319,7 +317,7 @@ function initSimpleCarousel() {
         const centeredSlide = getCenteredSlide(track);
         if (!centeredSlide) return 0;
 
-        return Number(centeredSlide.dataset.realIndex || 0);
+        return getSlides(track).indexOf(centeredSlide);
     }
 
     function updateDots(track, currentIndex) {
@@ -333,29 +331,24 @@ function initSimpleCarousel() {
     }
 
     function updateActiveSlide(track, currentIndex) {
-        const slides = getRealSlides(track);
+        const slides = getSlides(track);
         slides.forEach((slide, index) => {
             slide.classList.toggle('active', index === currentIndex);
         });
     }
 
-    function positionSlide(track, slide, smooth = true) {
-        if (!slide) return;
-
-        const targetLeft = slide.offsetLeft - ((track.clientWidth - slide.offsetWidth) / 2);
-        track.scrollTo({
-            left: Math.max(0, targetLeft),
-            behavior: smooth ? 'smooth' : 'auto'
-        });
-    }
-
     function scrollToSlide(track, index, smooth = true) {
-        const slides = getRealSlides(track);
+        const slides = getSlides(track);
         if (!slides.length) return 0;
 
         const safeIndex = Math.max(0, Math.min(index, slides.length - 1));
         const slide = slides[safeIndex];
-        positionSlide(track, slide, smooth);
+        const targetLeft = slide.offsetLeft - ((track.clientWidth - slide.offsetWidth) / 2);
+
+        track.scrollTo({
+            left: Math.max(0, targetLeft),
+            behavior: smooth ? 'smooth' : 'auto'
+        });
 
         updateDots(track, safeIndex);
         updateActiveSlide(track, safeIndex);
@@ -363,41 +356,18 @@ function initSimpleCarousel() {
     }
 
     function setupCarousel(track, prevBtn, nextBtn) {
-        const originalSlides = getRealSlides(track);
-        if (!originalSlides.length) return;
-
-        const firstClone = originalSlides[0].cloneNode(true);
-        const lastClone = originalSlides[originalSlides.length - 1].cloneNode(true);
-        firstClone.classList.add('is-clone');
-        lastClone.classList.add('is-clone');
-        firstClone.dataset.realIndex = '0';
-        lastClone.dataset.realIndex = String(originalSlides.length - 1);
-        track.insertBefore(lastClone, originalSlides[0]);
-        track.appendChild(firstClone);
-
-        const slides = getRealSlides(track);
-        slides.forEach((slide, index) => {
-            slide.dataset.realIndex = String(index);
-        });
+        const slides = getSlides(track);
+        if (!slides.length) return;
 
         let currentIndex = 0;
         let scrollTicking = false;
-        let loopResetTimer = null;
         const lastIndex = slides.length - 1;
         const dotsContainer = getDotsContainer(track);
+        let touchStartX = 0;
+        let touchDeltaX = 0;
 
         function goToSlide(index, smooth = true) {
             currentIndex = scrollToSlide(track, index, smooth);
-        }
-
-        function syncLoopPosition() {
-            const centeredSlide = getCenteredSlide(track);
-            if (!centeredSlide || !centeredSlide.classList.contains('is-clone')) return;
-
-            currentIndex = Number(centeredSlide.dataset.realIndex || 0);
-            updateDots(track, currentIndex);
-            updateActiveSlide(track, currentIndex);
-            positionSlide(track, slides[currentIndex], false);
         }
 
         if (dotsContainer) {
@@ -426,12 +396,35 @@ function initSimpleCarousel() {
                     updateDots(track, currentIndex);
                     updateActiveSlide(track, currentIndex);
                 }
-
-                 window.clearTimeout(loopResetTimer);
-                 loopResetTimer = window.setTimeout(syncLoopPosition, 140);
                 scrollTicking = false;
             });
         });
+
+        track.addEventListener('touchstart', function(event) {
+            if (!event.touches.length) return;
+            touchStartX = event.touches[0].clientX;
+            touchDeltaX = 0;
+        }, { passive: true });
+
+        track.addEventListener('touchmove', function(event) {
+            if (!event.touches.length) return;
+            touchDeltaX = event.touches[0].clientX - touchStartX;
+        }, { passive: true });
+
+        track.addEventListener('touchend', function() {
+            if (Math.abs(touchDeltaX) < 40) return;
+
+            const centeredIndex = getCenteredIndex(track);
+
+            if (centeredIndex === lastIndex && touchDeltaX < 0) {
+                goToSlide(0);
+                return;
+            }
+
+            if (centeredIndex === 0 && touchDeltaX > 0) {
+                goToSlide(lastIndex);
+            }
+        }, { passive: true });
 
         if (prevBtn) {
             prevBtn.addEventListener('click', function() {
