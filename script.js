@@ -264,22 +264,33 @@ function initScrollAnimation() {
     const blocks = document.querySelectorAll('.story, .timer-section, .calendar-section, .schedule, .location, .dresscode, .info, .rsvp');
     
     if (!blocks.length) return;
-    
-    const observerBlocks = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible-scroll');
-                observerBlocks.unobserve(entry.target);
+
+    function updateBlockVisibility() {
+        const viewportHeight = window.innerHeight;
+        const showLine = viewportHeight * 0.82;
+        const hideLine = viewportHeight * 0.08;
+
+        blocks.forEach(block => {
+            const rect = block.getBoundingClientRect();
+            const shouldShow = rect.top <= showLine && rect.bottom >= hideLine;
+
+            if (shouldShow) {
+                block.classList.add('visible-scroll');
+                return;
+            }
+
+            const isAboveViewport = rect.bottom < hideLine;
+            const isBelowViewport = rect.top > showLine;
+
+            if (isAboveViewport || isBelowViewport) {
+                block.classList.remove('visible-scroll');
             }
         });
-    }, {
-        threshold: 0.18,
-        rootMargin: '0px 0px -10% 0px'
-    });
-    
-    blocks.forEach(block => {
-        observerBlocks.observe(block);
-    });
+    }
+
+    window.addEventListener('scroll', updateBlockVisibility, { passive: true });
+    window.addEventListener('resize', updateBlockVisibility);
+    updateBlockVisibility();
 }
 
 // ===== ПРОСТАЯ КАРУСЕЛЬ (100% РАБОТАЕТ) =====
@@ -292,32 +303,25 @@ function initSimpleCarousel() {
         return track.closest('.carousel-section')?.querySelector('.simple-dots') || null;
     }
 
-    function getCenteredSlide(track) {
+    function getCenteredIndex(track) {
         const slides = getSlides(track);
-        if (!slides.length) return null;
+        if (!slides.length) return 0;
 
         const trackCenter = track.scrollLeft + (track.clientWidth / 2);
-        let closestSlide = null;
+        let closestIndex = 0;
         let closestDistance = Infinity;
 
-        slides.forEach((slide) => {
+        slides.forEach((slide, index) => {
             const slideCenter = slide.offsetLeft + (slide.offsetWidth / 2);
             const distance = Math.abs(slideCenter - trackCenter);
 
             if (distance < closestDistance) {
                 closestDistance = distance;
-                closestSlide = slide;
+                closestIndex = index;
             }
         });
 
-        return closestSlide;
-    }
-
-    function getCenteredIndex(track) {
-        const centeredSlide = getCenteredSlide(track);
-        if (!centeredSlide) return 0;
-
-        return getSlides(track).indexOf(centeredSlide);
+        return closestIndex;
     }
 
     function updateDots(track, currentIndex) {
@@ -363,8 +367,6 @@ function initSimpleCarousel() {
         let scrollTicking = false;
         const lastIndex = slides.length - 1;
         const dotsContainer = getDotsContainer(track);
-        let touchStartX = 0;
-        let touchDeltaX = 0;
 
         function goToSlide(index, smooth = true) {
             currentIndex = scrollToSlide(track, index, smooth);
@@ -399,32 +401,6 @@ function initSimpleCarousel() {
                 scrollTicking = false;
             });
         });
-
-        track.addEventListener('touchstart', function(event) {
-            if (!event.touches.length) return;
-            touchStartX = event.touches[0].clientX;
-            touchDeltaX = 0;
-        }, { passive: true });
-
-        track.addEventListener('touchmove', function(event) {
-            if (!event.touches.length) return;
-            touchDeltaX = event.touches[0].clientX - touchStartX;
-        }, { passive: true });
-
-        track.addEventListener('touchend', function() {
-            if (Math.abs(touchDeltaX) < 40) return;
-
-            const centeredIndex = getCenteredIndex(track);
-
-            if (centeredIndex === lastIndex && touchDeltaX < 0) {
-                goToSlide(0);
-                return;
-            }
-
-            if (centeredIndex === 0 && touchDeltaX > 0) {
-                goToSlide(lastIndex);
-            }
-        }, { passive: true });
 
         if (prevBtn) {
             prevBtn.addEventListener('click', function() {
