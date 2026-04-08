@@ -69,6 +69,17 @@ section {
     padding: 60px 0;
 }
 
+.invite-page section {
+    margin-bottom: 12px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.invite-page section:last-of-type {
+    margin-bottom: 0;
+}
+
 .section-title {
     font-size: 36px;
     text-align: center;
@@ -99,6 +110,7 @@ section {
     border: 1px solid rgba(255, 243, 240, 0.48);
     border-radius: 28px;
     overflow: hidden;
+    padding: 12px;
     box-shadow: 0 24px 70px rgba(32, 16, 21, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(10px);
 }
@@ -949,6 +961,8 @@ footer {
     padding: 40px 20px;
     background: rgba(44, 62, 80, 0.82);
     color: white;
+    border-radius: 24px;
+    overflow: hidden;
 }
 
 footer p {
@@ -973,6 +987,7 @@ footer p {
     .invite-page {
         width: min(100%, 720px);
         border-radius: 22px;
+        padding: 10px;
     }
 
     .site-background-video {
@@ -1294,7 +1309,7 @@ footer p {
 .info,
 .pet-dressup,
 .rsvp {
-    border-top: 1px solid rgba(201, 143, 157, 0.12);
+    border-top: none;
 }
 
 .hero + .story {
@@ -1665,6 +1680,12 @@ footer p {
 
     .invite-page {
         width: 100%;
+        border-radius: 18px;
+        padding: 8px;
+    }
+
+    .invite-page section,
+    footer {
         border-radius: 18px;
     }
 
