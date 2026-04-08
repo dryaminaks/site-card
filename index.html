@@ -21,6 +21,29 @@
         </video>
     </div>
 
+    <div class="envelope-intro" id="envelopeIntro" aria-hidden="false">
+        <div class="envelope-intro__backdrop"></div>
+        <div class="envelope-intro__panel">
+            <div class="envelope-intro__envelope-wrap">
+                <div class="envelope-intro__letter" aria-hidden="true">
+                    <div class="envelope-intro__letter-card">
+                        <span class="envelope-intro__letter-monogram">P & B</span>
+                        <span class="envelope-intro__letter-date">2 августа 2026</span>
+                    </div>
+                </div>
+                <div class="envelope-intro__envelope" id="envelopeTrigger" role="button" tabindex="0" aria-label="Открыть приглашение">
+                    <div class="envelope-intro__doors" aria-hidden="true">
+                        <div class="envelope-intro__door envelope-intro__door--left"></div>
+                        <div class="envelope-intro__door envelope-intro__door--right"></div>
+                    </div>
+                    <div class="envelope-intro__seam" aria-hidden="true"></div>
+                    <div class="envelope-intro__base" aria-hidden="true"></div>
+                </div>
+            </div>
+            <button class="envelope-intro__open-button" id="envelopeOpenButton" type="button">Открыть</button>
+        </div>
+    </div>
+
     <div class="invite-page visible" id="invitePage">
         <!-- Главный экран -->
         <section class="hero">
@@ -51,7 +74,7 @@
         <!-- Календарь -->
         <section class="calendar-section">
             <div class="container">
-                <h2 class="section-title">Долгожданный день</h2>
+                <h2 class="section-title">Наш день 🤍</h2>
                 <div class="calendar-wrapper">
                     <div class="calendar">
                         <div class="calendar-header">
@@ -74,7 +97,7 @@
                             <span>31</span>
                         </div>
                     </div>
-                    <p class="calendar-note">2 августа 2026 — наш особенный день!</p>
+                    <p class="calendar-note">2 августа 2026 — наш особенный день, который мы будем счастливы разделить с каждым из вас!</p>
                 </div>
             </div>
         </section>
@@ -194,33 +217,6 @@
                     <img src="img/dresscode/heart_4.png" alt="Пример образа в пастельных тонах 4" class="dresscode-image" loading="lazy">
                 </div>
 
-                <!-- Мужские образы -->
-                <div class="carousel-section">
-                    <h3 class="carousel-title">Мужские образы</h3>
-                    <div class="simple-carousel">
-                        <button class="simple-prev" data-carousel="male" aria-label="Предыдущий слайд">&#10094;</button>
-                        <div class="simple-track" data-track="male">
-                            <div class="simple-slide"><img src="img/dresscode/man1.jpg" alt="Мужской образ 1" loading="lazy"></div>
-                            <div class="simple-slide"><img src="img/dresscode/man2.jpg" alt="Мужской образ 2" loading="lazy"></div>
-                            <div class="simple-slide"><img src="img/dresscode/man3.jpg" alt="Мужской образ 3" loading="lazy"></div>
-                            <div class="simple-slide"><img src="img/dresscode/man4.jpg" alt="Мужской образ 4" loading="lazy"></div>
-                            <div class="simple-slide"><img src="img/dresscode/man5.jpg" alt="Мужской образ 5" loading="lazy"></div>
-                            <div class="simple-slide"><img src="img/dresscode/man6.jpg" alt="Мужской образ 6" loading="lazy"></div>
-                            <div class="simple-slide"><img src="img/dresscode/man7.jpg" alt="Мужской образ 7" loading="lazy"></div>
-                            <div class="simple-slide"><img src="img/dresscode/man8.jpg" alt="Мужской образ 8" loading="lazy"></div>
-                            <div class="simple-slide"><img src="img/dresscode/man9.jpg" alt="Мужской образ 9" loading="lazy"></div>
-                            <div class="simple-slide"><img src="img/dresscode/man10.jpg" alt="Мужской образ 10" loading="lazy"></div>
-                            <div class="simple-slide"><img src="img/dresscode/man11.jpg" alt="Мужской образ 11" loading="lazy"></div>
-                            <div class="simple-slide"><img src="img/dresscode/man12.jpg" alt="Мужской образ 12" loading="lazy"></div>
-                            <div class="simple-slide"><img src="img/dresscode/man13.jpg" alt="Мужской образ 13" loading="lazy"></div>
-                            <div class="simple-slide"><img src="img/dresscode/man14.jpg" alt="Мужской образ 14" loading="lazy"></div>
-                            <div class="simple-slide"><img src="img/dresscode/man15.jpg" alt="Мужской образ 15" loading="lazy"></div>
-                        </div>
-                        <button class="simple-next" data-carousel="male" aria-label="Следующий слайд">&#10095;</button>
-                    </div>
-                    <div class="simple-dots" data-dots="male"></div>
-                </div>
-                
                 <!-- Женские образы -->
                 <div class="carousel-section">
                     <h3 class="carousel-title">Женские образы</h3>
@@ -254,6 +250,33 @@
                         <button class="simple-next" data-carousel="female" aria-label="Следующий слайд">&#10095;</button>
                     </div>
                     <div class="simple-dots" data-dots="female"></div>
+                </div>
+
+                <!-- Мужские образы -->
+                <div class="carousel-section">
+                    <h3 class="carousel-title">Мужские образы</h3>
+                    <div class="simple-carousel">
+                        <button class="simple-prev" data-carousel="male" aria-label="Предыдущий слайд">&#10094;</button>
+                        <div class="simple-track" data-track="male">
+                            <div class="simple-slide"><img src="img/dresscode/man1.jpg" alt="Мужской образ 1" loading="lazy"></div>
+                            <div class="simple-slide"><img src="img/dresscode/man2.jpg" alt="Мужской образ 2" loading="lazy"></div>
+                            <div class="simple-slide"><img src="img/dresscode/man3.jpg" alt="Мужской образ 3" loading="lazy"></div>
+                            <div class="simple-slide"><img src="img/dresscode/man4.jpg" alt="Мужской образ 4" loading="lazy"></div>
+                            <div class="simple-slide"><img src="img/dresscode/man5.jpg" alt="Мужской образ 5" loading="lazy"></div>
+                            <div class="simple-slide"><img src="img/dresscode/man6.jpg" alt="Мужской образ 6" loading="lazy"></div>
+                            <div class="simple-slide"><img src="img/dresscode/man7.jpg" alt="Мужской образ 7" loading="lazy"></div>
+                            <div class="simple-slide"><img src="img/dresscode/man8.jpg" alt="Мужской образ 8" loading="lazy"></div>
+                            <div class="simple-slide"><img src="img/dresscode/man9.jpg" alt="Мужской образ 9" loading="lazy"></div>
+                            <div class="simple-slide"><img src="img/dresscode/man10.jpg" alt="Мужской образ 10" loading="lazy"></div>
+                            <div class="simple-slide"><img src="img/dresscode/man11.jpg" alt="Мужской образ 11" loading="lazy"></div>
+                            <div class="simple-slide"><img src="img/dresscode/man12.jpg" alt="Мужской образ 12" loading="lazy"></div>
+                            <div class="simple-slide"><img src="img/dresscode/man13.jpg" alt="Мужской образ 13" loading="lazy"></div>
+                            <div class="simple-slide"><img src="img/dresscode/man14.jpg" alt="Мужской образ 14" loading="lazy"></div>
+                            <div class="simple-slide"><img src="img/dresscode/man15.jpg" alt="Мужской образ 15" loading="lazy"></div>
+                        </div>
+                        <button class="simple-next" data-carousel="male" aria-label="Следующий слайд">&#10095;</button>
+                    </div>
+                    <div class="simple-dots" data-dots="male"></div>
                 </div>
             </div>
         </section>

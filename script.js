@@ -33,6 +33,123 @@ function updateTimer() {
 updateTimer();
 setInterval(updateTimer, 1000);
 
+// ===== EnvelopeIntro =====
+class EnvelopeIntro {
+    constructor({
+        root,
+        onOpenComplete = () => {},
+        storageKey = 'wedding-envelope-intro-opened'
+    }) {
+        this.root = root;
+        this.onOpenComplete = onOpenComplete;
+        this.storageKey = storageKey;
+        this.trigger = root?.querySelector('#envelopeTrigger');
+        this.button = root?.querySelector('#envelopeOpenButton');
+        this.isOpened = false;
+        this.isAnimating = false;
+        this.openTimeout = null;
+        this.animationDuration = this.getAnimationDuration();
+
+        if (!this.root || !this.trigger || !this.button) return;
+
+        if (sessionStorage.getItem(this.storageKey) === '1') {
+            this.finishImmediately();
+            return;
+        }
+
+        document.body.classList.add('intro-active');
+        this.bindEvents();
+    }
+
+    getAnimationDuration() {
+        const duration = getComputedStyle(this.root)
+            .getPropertyValue('--intro-open-duration')
+            .trim();
+        const fallbackMs = 1450;
+
+        if (!duration) return fallbackMs;
+        if (duration.endsWith('ms')) return parseFloat(duration);
+        if (duration.endsWith('s')) return parseFloat(duration) * 1000;
+        return fallbackMs;
+    }
+
+    bindEvents() {
+        this.handleOpen = this.handleOpen.bind(this);
+        this.handleKeydown = this.handleKeydown.bind(this);
+
+        this.trigger.addEventListener('click', this.handleOpen);
+        this.button.addEventListener('click', this.handleOpen);
+        this.trigger.addEventListener('keydown', this.handleKeydown);
+    }
+
+    handleKeydown(event) {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        this.handleOpen();
+    }
+
+    handleOpen() {
+        if (this.isOpened || this.isAnimating) return;
+
+        this.isAnimating = true;
+        this.root.classList.add('is-animating', 'is-opening');
+        this.button.disabled = true;
+        this.trigger.setAttribute('aria-disabled', 'true');
+
+        this.openTimeout = window.setTimeout(() => {
+            this.completeOpen();
+        }, this.animationDuration + 280);
+    }
+
+    completeOpen() {
+        if (this.isOpened) return;
+
+        this.isOpened = true;
+        this.isAnimating = false;
+        sessionStorage.setItem(this.storageKey, '1');
+        document.body.classList.remove('intro-active');
+
+        this.root.setAttribute('aria-hidden', 'true');
+        this.root.classList.add('is-hidden');
+
+        window.setTimeout(() => {
+            this.root.hidden = true;
+            this.onOpenComplete();
+        }, 700);
+    }
+
+    finishImmediately() {
+        this.isOpened = true;
+        this.root.hidden = true;
+        this.root.classList.add('is-hidden');
+        this.root.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('intro-active');
+        this.onOpenComplete();
+    }
+}
+
+function initEnvelopeIntro() {
+    const introRoot = document.getElementById('envelopeIntro');
+    if (!introRoot) return null;
+
+    // Reset intro state on full page leave/reload so the envelope
+    // appears again after a manual refresh.
+    window.addEventListener('pagehide', () => {
+        sessionStorage.removeItem('wedding-envelope-intro-opened');
+    });
+
+    return new EnvelopeIntro({
+        root: introRoot,
+        onOpenComplete: () => {
+            document.body.classList.remove('intro-active');
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initEnvelopeIntro();
+});
+
 // ===== ФОРМА (отправка в Google Таблицу) =====
 const weddingForm = document.getElementById('weddingForm');
 if (weddingForm) {
