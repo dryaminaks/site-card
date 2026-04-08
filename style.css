@@ -61,14 +61,18 @@ section {
     padding: 60px 0;
 }
 
-.invite-page section {
-    border-radius: 24px;
+.calendar-section,
+.pet-dressup,
+.rsvp {
+    border-radius: 420px 420px 420px 420px / 300px 300px 300px 300px;
     overflow: hidden;
     background:
-        radial-gradient(circle at 18% 18%, #ffffff 0%, #ffffff 18%, transparent 28%),
-        radial-gradient(circle at 82% 74%, #ead9d6 0%, #ead9d6 18%, transparent 32%),
-        linear-gradient(135deg, #fff9f7 0%, #f1e5e2 46%, #fff7f5 100%);
-    box-shadow: inset 0 1px 0 #ffffff;
+        radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.22) 18%, transparent 28%),
+        radial-gradient(circle at 82% 74%, rgba(234, 217, 214, 0.28) 0%, rgba(234, 217, 214, 0.18) 18%, transparent 32%),
+        linear-gradient(135deg, rgba(255, 249, 247, 0.76) 0%, rgba(241, 229, 226, 0.68) 46%, rgba(255, 247, 245, 0.74) 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.52),
+        0 14px 34px rgba(82, 63, 45, 0.1);
 }
 
 .section-title {
@@ -228,7 +232,7 @@ section {
 
 /* Таймер */
 .timer-section {
-    background: rgba(255, 255, 255, 0.1);
+    background: transparent;
     text-align: center;
 }
 
@@ -245,7 +249,7 @@ section {
     border-radius: 12px;
     min-width: 80px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    border: 1px solid #eee;
+    border: none;
 }
 
 .timer-number {
@@ -780,13 +784,13 @@ section {
 }
 
 .rsvp-form {
-    background: rgba(255, 252, 250, 0.82);
+    background: transparent;
     padding: 30px 25px;
     border-radius: 16px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.05);
-    border: 1px solid rgba(255, 255, 255, 0.55);
+    box-shadow: none;
+    border: none;
     text-align: left;
-    backdrop-filter: blur(12px);
+    backdrop-filter: none;
 }
 
 .form-group {
@@ -930,8 +934,8 @@ section {
 footer {
     text-align: center;
     padding: 40px 20px;
-    background: rgba(44, 62, 80, 0.82);
-    color: white;
+    background: transparent;
+    color: var(--text-soft);
     border-radius: 24px;
     overflow: hidden;
 }
@@ -1207,8 +1211,9 @@ footer p {
 .simple-slide img {
     width: 100%;
     border-radius: 16px;
-    aspect-ratio: 3 / 4;
-    object-fit: cover;
+    aspect-ratio: 9 / 16;
+    object-fit: contain;
+    background: rgba(255, 255, 255, 0.28);
     filter: blur(3px);
     transition: filter 0.35s ease, box-shadow 0.35s ease;
 }
@@ -1655,9 +1660,10 @@ footer p {
         padding: 8px;
     }
 
-    .invite-page section,
-    footer {
-        border-radius: 18px;
+    .calendar-section,
+    .pet-dressup,
+    .rsvp {
+        border-radius: 240px 240px 240px 240px / 160px 160px 160px 160px;
     }
 
     .hero {
