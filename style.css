@@ -93,13 +93,14 @@ section {
     transition: opacity 1.2s ease-in-out, visibility 1.2s ease-in-out;
     position: relative;
     z-index: 0;
-    width: min(920px, 100%);
+    width: min(840px, 100%);
     margin: 0 auto;
-    background: linear-gradient(180deg, rgba(251, 245, 243, 0.95) 0%, rgba(246, 236, 233, 0.92) 100%);
-    border: 1px solid rgba(255, 243, 240, 0.55);
+    background: linear-gradient(180deg, rgba(251, 245, 243, 0.84) 0%, rgba(246, 236, 233, 0.78) 100%);
+    border: 1px solid rgba(255, 243, 240, 0.48);
     border-radius: 28px;
     overflow: hidden;
     box-shadow: 0 24px 70px rgba(32, 16, 21, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(10px);
 }
 
 .invite-page::before {
@@ -966,10 +967,11 @@ footer p {
 /* Адаптация */
 @media (max-width: 768px) {
     body {
-        padding: 12px;
+        padding: 16px;
     }
 
     .invite-page {
+        width: min(100%, 720px);
         border-radius: 22px;
     }
 
@@ -1658,14 +1660,12 @@ footer p {
 
 @media (max-width: 480px) {
     body {
-        padding: 0;
+        padding: 10px;
     }
 
     .invite-page {
         width: 100%;
-        border-radius: 0;
-        border-left: none;
-        border-right: none;
+        border-radius: 18px;
     }
 
     .hero {
