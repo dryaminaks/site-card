@@ -1,17 +1,28 @@
 ﻿/* Обнуление и базовые стили */
+@font-face {
+    font-family: 'Gogol';
+    src: url('fonts/ofont.ru_Gogol.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
-    --accent: #c98f9d;
-    --accent-dark: #b87a89;
-    --accent-soft: #f4d8df;
-    --accent-glow: rgba(201, 143, 157, 0.35);
+    --accent: #c78ea0;
+    --accent-dark: #b5798e;
+    --accent-soft: #f3dce3;
+    --accent-glow: rgba(199, 142, 160, 0.35);
+    --tone-brown: #766055;
+    --tone-green: #6f8a6f;
+    --tone-pink: #c78ea0;
     --rose-beige-1: #f7eeeb;
     --rose-beige-2: #ead9d6;
     --rose-beige-3: #fdf6f4;
     --rose-beige-4: #f6e9e6;
     --rose-beige-5: #e7d3d0;
-    --muted: #9f7e81;
-    --muted-light: #c2a9ab;
-    --text-soft: #6f5d60;
+    --muted: #a88d93;
+    --muted-light: #d2c0ba;
+    --text-soft: #766055;
 }
 
 * {
@@ -24,7 +35,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
     line-height: 1.6;
-    color: #2c3e50;
+    color: var(--tone-brown);
     background: #2f2024;
     position: relative;
     padding: 24px 16px;
@@ -290,7 +301,7 @@ body.intro-active {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(32px, 5vw, 46px);
     letter-spacing: 0.2em;
-    color: #364964;
+    color: var(--tone-green);
 }
 
 .envelope-intro__letter-date {
@@ -440,7 +451,7 @@ section {
     background: transparent;
     border: none;
     border-radius: 28px;
-    overflow: hidden;
+    overflow: visible;
     padding: 0;
     box-shadow: none;
     backdrop-filter: none;
@@ -459,12 +470,15 @@ section {
 /* Главный экран */
 .hero {
     min-height: 100vh;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
     background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #2c3e50;
+    color: var(--tone-brown);
     position: relative;
     overflow: hidden;
 }
@@ -472,10 +486,43 @@ section {
 .hero-content {
     position: relative;
     z-index: 1;
-    padding: 20px;
+    padding: 20px 0;
     width: 100%;
-    max-width: 600px;
+    max-width: none;
     margin: 0 auto;
+}
+
+.hero-photo-intro {
+    position: relative;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    margin-left: -50vw;
+    margin-bottom: 24px;
+}
+
+.hero-photo-intro__frame {
+    width: min(1120px, 100vw);
+    flex: 0 0 min(1120px, 100vw);
+    max-width: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(8px, 1vw, 14px);
+    padding: 0 clamp(8px, 1vw, 14px);
+    align-items: stretch;
+}
+
+.hero-photo-intro__panel {
+    aspect-ratio: 0.435 / 1;
+    overflow: hidden;
+}
+
+.hero-photo-intro__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .hero-greeting {
@@ -488,34 +535,39 @@ section {
     text-shadow: none;
     color: var(--text-soft);
     font-family: 'Montserrat', sans-serif;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
 }
 
 .names {
-    margin-bottom: 30px;
+    font-size: clamp(44px, 6.4vw, 60px);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: 0;
+    text-shadow: none;
+    color: var(--tone-brown);
+    font-family: 'Gogol', 'Cormorant Garamond', serif;
+    font-style: normal;
+    margin-bottom: 12px;
+    padding: 0 20px;
 }
 
 .names-line {
-    display: block;
-    font-size: 56px;
-    font-weight: 400;
-    line-height: 1.1;
-    text-transform: uppercase;
-    letter-spacing: 6px;
-    text-shadow: none;
-    color: #344b68;
-    font-family: 'Cormorant Garamond', serif;
+    display: inline;
 }
 
 .names-ampersand {
-    display: block;
-    font-size: 48px;
+    display: inline-block;
+    font-size: 0.72em;
     font-weight: 300;
     line-height: 1;
-    margin: 10px 0;
-    font-style: italic;
+    margin: 0 0.14em;
+    font-style: normal;
     opacity: 1;
     color: var(--muted);
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Gogol', 'Cormorant Garamond', serif;
 }
 
 .hero-date {
@@ -526,6 +578,7 @@ section {
     text-shadow: none;
     color: var(--text-soft);
     font-family: 'Montserrat', sans-serif;
+    padding: 0 20px;
 }
 
 .hero-invite {
@@ -539,6 +592,7 @@ section {
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
+    padding: 0 20px;
 }
 
 /* Наша история */
@@ -552,7 +606,7 @@ section {
     line-height: 1.8;
     max-width: 500px;
     margin: 0 auto;
-    color: #555;
+    color: var(--tone-brown);
 }
 
 .story-signature {
@@ -569,11 +623,17 @@ section {
     text-align: center;
 }
 
+.timer-section .section-title {
+    white-space: nowrap;
+}
+
 .timer {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     justify-content: center;
     gap: 15px;
-    flex-wrap: wrap;
+    max-width: 520px;
+    margin: 0 auto;
 }
 
 .timer-item {
@@ -672,7 +732,7 @@ section {
 }
 
 .calendar-days .wedding-day {
-    color: #8f6a5b;
+    color: var(--tone-brown);
     font-weight: 600;
     position: relative;
     width: 36px;
@@ -879,7 +939,7 @@ section {
 .timeline-content h3 {
     font-size: 22px;
     font-weight: 500;
-    color: #2c3e50;
+    color: var(--tone-green);
     margin-bottom: 8px;
     font-family: 'Cormorant Garamond', serif;
 }
@@ -962,8 +1022,8 @@ section {
 }
 
 .location-address {
-    font-size: 16px;
-    color: #666;
+    font-size: 14px;
+    color: var(--tone-brown);
     margin-bottom: 20px;
 }
 
@@ -991,7 +1051,7 @@ section {
 .location-note {
     margin-top: 20px;
     font-size: 13px;
-    color: #999;
+    color: var(--muted);
     font-style: italic;
 }
 
@@ -1003,23 +1063,26 @@ section {
 
 .dresscode-text {
     margin-bottom: 25px;
-    color: #555;
+    color: var(--tone-brown);
 }
 
 .dresscode-gallery {
-    display: flex;
-    justify-content: center;
+    position: relative;
+    left: 50%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     align-items: center;
-    gap: 12px;
-    flex-wrap: nowrap;
-    margin: 0 auto;
+    gap: clamp(8px, 1.4vw, 18px);
+    width: min(100vw, 1120px);
+    margin: 0 0 8px calc(-1 * min(50vw, 560px));
+    padding: 0 clamp(12px, 2.2vw, 28px);
     isolation: isolate;
 }
 
 .dresscode-image {
-    width: 22%;
-    min-width: 90px;
-    max-width: 140px;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
     display: block;
     background: transparent;
     box-shadow: none;
@@ -1027,8 +1090,7 @@ section {
     mix-blend-mode: multiply;
     opacity: 0.98;
     filter: brightness(0.99) contrast(1.06) saturate(1.02);
-    mask-image: radial-gradient(circle at center, #000 78%, rgba(0, 0, 0, 0.94) 90%, rgba(0, 0, 0, 0.68) 96%, transparent 100%);
-    -webkit-mask-image: radial-gradient(circle at center, #000 78%, rgba(0, 0, 0, 0.94) 90%, rgba(0, 0, 0, 0.68) 96%, transparent 100%);
+    object-fit: contain;
 }
 
 /* Организационные моменты */
@@ -1039,7 +1101,7 @@ section {
 
 .info-subtitle {
     text-align: center;
-    color: #666;
+    color: var(--tone-brown);
     font-size: 15px;
     margin-bottom: 40px;
     max-width: 500px;
@@ -1110,13 +1172,13 @@ section {
     font-size: 20px;
     font-weight: 500;
     margin-bottom: 8px;
-    color: #2c3e50;
+    color: var(--tone-green);
 }
 
 .info-content p {
     font-size: 14px;
     line-height: 1.6;
-    color: #666;
+    color: var(--tone-brown);
     margin: 0;
 }
 
@@ -1137,7 +1199,7 @@ section {
 }
 
 .rsvp-subtitle {
-    color: #666;
+    color: var(--tone-brown);
     margin-bottom: 30px;
     font-size: 15px;
 }
@@ -1161,7 +1223,7 @@ section {
     margin-bottom: 8px;
     font-size: 14px;
     font-weight: 400;
-    color: #555;
+    color: var(--tone-brown);
 }
 
 .form-group input,
@@ -1355,30 +1417,59 @@ footer p {
         letter-spacing: 0.14em;
     }
 
-    .names-line {
-        font-size: 42px;
-        letter-spacing: 4px;
+    .names {
+        font-size: clamp(36px, 8.8vw, 48px);
+        letter-spacing: 0.015em;
     }
-    
+
     .names-ampersand {
-        font-size: 36px;
+        font-size: 0.7em;
     }
     
     .hero-greeting {
         font-size: 14px;
     }
+
+    .hero-photo-intro {
+        margin-bottom: 20px;
+    }
+
+    .hero-photo-intro__frame {
+        gap: 8px;
+        padding: 0 8px;
+    }
+
+    .hero-photo-intro__panel {
+        aspect-ratio: 0.435 / 1;
+        overflow: hidden;
+    }
+
+    .dresscode-gallery {
+        gap: 6px;
+        padding: 0 10px;
+    }
     
     .hero-invite {
         font-size: 14px;
     }
+
+    .timer-section .section-title {
+        font-size: clamp(30px, 7vw, 40px);
+        white-space: nowrap;
+    }
     
     .timer-item {
-        min-width: 65px;
-        padding: 15px 10px;
+        min-width: 0;
+        padding: 14px 8px;
     }
     
     .timer-number {
-        font-size: 32px;
+        font-size: 30px;
+    }
+
+    .timer-label {
+        font-size: 11px;
+        letter-spacing: 0.06em;
     }
     
     .music-button {
@@ -1573,18 +1664,23 @@ footer p {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: min(100vw, 1440px);
+    left: 50%;
+    margin-left: calc(-1 * min(50vw, 720px));
+    padding: 0 clamp(12px, 2.2vw, 28px);
 }
 
 .simple-track {
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: max(0px, calc((100% - 250px) / 2));
+    scroll-padding-inline: max(12px, calc((min(100vw, 1440px) - 250px) / 2));
     gap: 15px;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding: 10px max(0px, calc((100% - 250px) / 2));
+    width: 100%;
+    padding: 10px max(12px, calc((min(100vw, 1440px) - 250px) / 2));
 }
 
 .simple-track::-webkit-scrollbar {
