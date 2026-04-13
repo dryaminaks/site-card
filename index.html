@@ -55,13 +55,13 @@
                 <div class="hero-photo-intro">
                     <div class="hero-photo-intro__frame" aria-label="Коллаж с Павлом и Ксенией">
                         <div class="hero-photo-intro__panel">
-                            <img src="img/ФОТО_1.PNG" alt="" class="hero-photo-intro__image" loading="eager">
+                            <img src="img/ФОТО_1.JPG" alt="" class="hero-photo-intro__image" loading="eager">
                         </div>
                         <div class="hero-photo-intro__panel">
-                            <img src="img/ФОТО_2.PNG" alt="" class="hero-photo-intro__image" loading="eager">
+                            <img src="img/ФОТО_2.JPG" alt="" class="hero-photo-intro__image" loading="eager">
                         </div>
                         <div class="hero-photo-intro__panel">
-                            <img src="img/ФОТО_3.PNG" alt="" class="hero-photo-intro__image" loading="eager">
+                            <img src="img/ФОТО_3.JPG" alt="" class="hero-photo-intro__image" loading="eager">
                         </div>
                     </div>
                 </div>
@@ -385,9 +385,9 @@
         <section class="rsvp">
             <div class="container">
                 <h2 class="section-title">Ждем вас!</h2>
-                <p class="rsvp-subtitle">Пожалуйста, подтвердите свое присутствие до 1 мая 2026</p>
+                <p class="rsvp-subtitle">Пожалуйста, подтвердите свое присутствие до 1 июля</p>
                 <form id="weddingForm" class="rsvp-form" method="POST"
-                    action="https://script.google.com/macros/s/AKfycbwRc1y2FSunMVRj8G6qFWQ6SUKLwrbx8UJk7pt7SmMLjQcn8iMUxVFx2K6oz9jwNKZT9w/exec">
+                    action="https://script.google.com/macros/s/AKfycbwGPa7A1HU_8YB08PgRquDObEQp7ESOfd39xh5Nvh4gnz0CiDIHRPWy6DWd9_hep5T3-w/exec">
                     <div class="form-group">
                         <label for="name">Ваше имя и фамилия *</label>
                         <input type="text" id="name" name="name" required placeholder="Например: Иван Петров">
@@ -397,6 +397,7 @@
                         <select id="attendance" name="attendance" required>
                             <option value="">Выберите...</option>
                             <option value="yes">Да, с радостью</option>
+                            <option value="maybe">Пока не знаю</option>
                             <option value="no">Нет, к сожалению</option>
                         </select>
                     </div>
@@ -404,17 +405,61 @@
                         <label for="guests">Количество гостей (включая вас) *</label>
                         <input type="number" id="guests" name="guests" min="1" max="5" value="1" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group is-hidden" id="companionsGroup">
+                        <label for="companions" id="companionsLabel">Имя и фамилия остальных гостей *</label>
+                        <textarea id="companions" name="companions" rows="2" placeholder="Например: Анна Петрова, Сергей Иванов"></textarea>
+                    </div>
+                    <div class="form-group" id="drinksSection">
+                        <span class="form-label">Какие напитки вы предпочитаете?</span>
+                        <p class="form-hint">Можно выбрать несколько вариантов</p>
+                        <div class="checkbox-group" id="drinksGroup">
+                            <label class="checkbox-option">
+                                <input type="checkbox" value="Белое вино">
+                                <span>Белое вино</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" value="Красное вино">
+                                <span>Красное вино</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" value="Игристое">
+                                <span>Игристое</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" value="Водка">
+                                <span>Водка</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" value="Виски">
+                                <span>Виски</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" value="Коньяк">
+                                <span>Коньяк</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" value="Безалкогольные напитки">
+                                <span>Безалкогольные напитки</span>
+                            </label>
+                        </div>
+                        <input type="hidden" id="drinks" name="drinks" value="">
+                    </div>
+                    <div class="form-group" id="dietGroup">
                         <label for="diet">Особенности питания (аллергии и т.д.)</label>
                         <textarea id="diet" name="diet" rows="2" placeholder="Например: не ем мясо..."></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="wishes">Пожелания молодоженам</label>
-                        <textarea id="wishes" name="wishes" rows="3" placeholder="Ваши теплые слова..."></textarea>
+                    <div class="form-group" id="wishesGroup">
+                        <label for="wishes">Комментарий</label>
+                        <textarea id="wishes" name="wishes" rows="3" placeholder="Если хотите, оставьте комментарий"></textarea>
                     </div>
                     <button type="submit" class="submit-btn" id="submitBtn">Отправить</button>
                     <div id="formMessage" class="form-message"></div>
                 </form>
+                <div id="formSuccessNote" class="form-success-note is-hidden">
+                    <h3>Спасибо!</h3>
+                    <p>Ваш ответ успешно отправлен. Мы получили вашу анкету.</p>
+                    <button type="button" class="success-reset-btn" id="resetFormBtn">Заполнить заново</button>
+                </div>
             </div>
         </section>
 

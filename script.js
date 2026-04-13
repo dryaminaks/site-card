@@ -153,12 +153,87 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== ФОРМА (отправка в Google Таблицу) =====
 const weddingForm = document.getElementById('weddingForm');
 if (weddingForm) {
+    const attendanceInput = document.getElementById('attendance');
+    const guestsInput = document.getElementById('guests');
+    const companionsGroup = document.getElementById('companionsGroup');
+    const companionsLabel = document.getElementById('companionsLabel');
+    const companionsInput = document.getElementById('companions');
+    const drinksSection = document.getElementById('drinksSection');
+    const dietGroup = document.getElementById('dietGroup');
+    const dietInput = document.getElementById('diet');
+    const wishesGroup = document.getElementById('wishesGroup');
+    const wishesInput = document.getElementById('wishes');
+    const drinksHiddenInput = document.getElementById('drinks');
+    const drinksCheckboxes = weddingForm.querySelectorAll('#drinksGroup input[type="checkbox"]');
+
+    function updateCompanionsField() {
+        const guestsCount = Number(guestsInput.value) || 1;
+        const hasCompanions = guestsCount > 1;
+        const attendanceValue = attendanceInput.value;
+        const isDeclined = attendanceValue === 'no';
+
+        companionsGroup.classList.toggle('is-hidden', !hasCompanions);
+        companionsInput.required = hasCompanions;
+        companionsLabel.textContent = isDeclined
+            ? 'Имя и фамилия тех, кто не сможет прийти *'
+            : 'Имя и фамилия остальных гостей *';
+
+        if (!hasCompanions) {
+            companionsInput.value = '';
+        }
+    }
+
+    function updateDrinksField() {
+        const selectedDrinks = Array.from(drinksCheckboxes)
+            .filter((checkbox) => checkbox.checked)
+            .map((checkbox) => checkbox.value);
+
+        drinksHiddenInput.value = selectedDrinks.join(', ');
+    }
+
+    function updateAttendanceDependentFields() {
+        const attendanceValue = attendanceInput.value;
+        const hidePreferenceFields = attendanceValue === 'no' || attendanceValue === 'maybe';
+        const hideWishesField = attendanceValue === 'maybe';
+
+        drinksSection.classList.toggle('is-hidden', hidePreferenceFields);
+        dietGroup.classList.toggle('is-hidden', hidePreferenceFields);
+        wishesGroup.classList.toggle('is-hidden', hideWishesField);
+
+        if (hidePreferenceFields) {
+            drinksCheckboxes.forEach((checkbox) => {
+                checkbox.checked = false;
+            });
+            dietInput.value = '';
+            updateDrinksField();
+        }
+
+        if (hideWishesField) {
+            wishesInput.value = '';
+        }
+
+        updateCompanionsField();
+    }
+
+    guestsInput.addEventListener('input', updateCompanionsField);
+    attendanceInput.addEventListener('change', updateAttendanceDependentFields);
+    drinksCheckboxes.forEach((checkbox) => {
+        checkbox.addEventListener('change', updateDrinksField);
+    });
+
+    updateAttendanceDependentFields();
+    updateDrinksField();
+
     weddingForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
         const form = this;
         const submitBtn = document.getElementById('submitBtn');
         const formMessage = document.getElementById('formMessage');
+        const formSuccessNote = document.getElementById('formSuccessNote');
+
+        formMessage.style.display = 'none';
+        formSuccessNote.classList.add('is-hidden');
         
         submitBtn.disabled = true;
         submitBtn.textContent = 'Отправка...';
@@ -172,8 +247,13 @@ if (weddingForm) {
         
         iframe.onload = function() {
             formMessage.className = 'form-message success';
-            formMessage.textContent = 'Спасибо! Ваш ответ получен.';
+            formMessage.textContent = 'Данные отправлены.';
+            formMessage.style.display = 'block';
+            formSuccessNote.classList.remove('is-hidden');
             form.reset();
+            updateAttendanceDependentFields();
+            updateDrinksField();
+            form.classList.add('is-hidden');
             submitBtn.disabled = false;
             submitBtn.textContent = 'Отправить';
             
@@ -189,6 +269,8 @@ if (weddingForm) {
         iframe.onerror = function() {
             formMessage.className = 'form-message error';
             formMessage.textContent = 'Ошибка отправки. Пожалуйста, попробуйте еще раз.';
+            formMessage.style.display = 'block';
+            formSuccessNote.classList.add('is-hidden');
             submitBtn.disabled = false;
             submitBtn.textContent = 'Отправить';
             document.body.removeChild(iframe);
@@ -196,6 +278,18 @@ if (weddingForm) {
         
         form.submit();
     });
+
+    const resetFormBtn = document.getElementById('resetFormBtn');
+    if (resetFormBtn) {
+        resetFormBtn.addEventListener('click', function() {
+            weddingForm.reset();
+            updateAttendanceDependentFields();
+            updateDrinksField();
+            weddingForm.classList.remove('is-hidden');
+            document.getElementById('formSuccessNote').classList.add('is-hidden');
+            document.getElementById('formMessage').style.display = 'none';
+        });
+    }
 }
 
 // ===== АНИМАЦИЯ ПРОГРАММЫ ДНЯ =====
