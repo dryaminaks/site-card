@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const timelinePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    timelinePath.setAttribute('d', 'M64 0 C96 70 96 170 64 240 C32 310 32 410 64 480 C96 550 96 650 64 720 C32 790 32 890 64 960 C96 1030 96 1130 64 1200');
+    timelinePath.setAttribute('d', 'M64 0 C108 78 108 162 64 240 C20 318 20 402 64 480 C108 558 108 642 64 720 C20 798 20 882 64 960 C108 1038 108 1122 64 1200');
     const timelinePathLength = timelinePath.getTotalLength();
     const timelineViewboxHeight = 1200;
 
